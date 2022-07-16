@@ -1,6 +1,17 @@
-import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { Picture } from "./picture";
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    JoinTable,
+    ManyToMany,
+    ManyToOne,
+    OneToMany,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn
+} from "typeorm";
 import { Tag } from "./tag";
+import {Label} from "./label";
+import {TSNumberKeyword} from "@typescript-eslint/types/dist/generated/ast-spec";
 
 @Entity()
 export class Product {
@@ -22,7 +33,7 @@ export class Product {
         length: 512
     })
     description!: string
-
+    
     @ManyToMany(() => Tag, {
         eager: true,
         cascade: true
@@ -36,9 +47,45 @@ export class Product {
     })
     pictures!: Array<Picture>
 
+    @OneToMany(() => Specification, (specification) => specification.product, {
+        eager: true,
+        cascade: true
+    })
+    specifications!: Array<Specification>
+    
     @CreateDateColumn()
     createDateTime!: Date
 
     @UpdateDateColumn()
     updateDateTime!: Date
+}
+
+@Entity()
+export class Picture {
+    @PrimaryGeneratedColumn()
+    id?: number
+
+    @Column()
+    fileId!: number
+
+    @ManyToOne(() => Product, (product) => product.pictures)
+    product!: Product
+}
+
+@Entity()
+export class Specification {
+    @PrimaryGeneratedColumn()
+    id?: number
+
+    @Column({length: 128})
+    key!: string
+
+    @ManyToOne(() => Label, {
+        cascade: true,
+        eager: true
+    })
+    label!: Label
+
+    @ManyToOne(() => Product)
+    product?: Product
 }

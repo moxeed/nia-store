@@ -19,7 +19,7 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<any>
 ) {
-    if (req.method == "PUT")
+    if (req.method === "PUT")
         return await handlePut(req, res);
 
     const repository = await getRepository(Product);

@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { Like } from "typeorm";
-import { getConncetion } from "../../database/datasource";
+import { getConnection } from "../../database/datasource";
 import { Tag } from "../../product/entities/tag";
 
 export default async function handler(
@@ -8,7 +8,7 @@ export default async function handler(
     res: NextApiResponse<any>
 ) {
     const term = req.query["term"];
-    const conncetion = await getConncetion();
+    const conncetion = await getConnection();
 
     const repository = conncetion.getRepository(Tag);
     const tags = await repository.find({

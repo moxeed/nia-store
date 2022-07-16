@@ -1,18 +1,17 @@
 import 'reflect-metadata'
 import { DataSource, EntityTarget, ObjectLiteral, Repository } from "typeorm";
 import { Label } from '../product/entities/label';
-import { Picture } from '../product/entities/picture';
-import { Product } from '../product/entities/product';
+import {Picture, Product, Specification} from '../product/entities/product';
 import { Tag } from '../product/entities/tag';
 
 const AppDataSource = new DataSource({
     type: "sqlite",
     database: "./storage/db.sqlite",
-    entities: [Product, Tag, Label, Picture],
+    entities: [Product, Tag, Label, Picture, Specification],
     synchronize: true
 })
 
-export const getConncetion = async (): Promise<DataSource> => {
+export const getConnection = async (): Promise<DataSource> => {
 
     if (AppDataSource.isInitialized) {
         return AppDataSource;
@@ -22,7 +21,7 @@ export const getConncetion = async (): Promise<DataSource> => {
 }
 
 export const getRepository = async <Entity extends ObjectLiteral>(target: EntityTarget<Entity>): Promise<Repository<Entity>> => {
-    const conncetion = await getConncetion();
-    return conncetion.getRepository(target);
+    const connection = await getConnection();
+    return connection.getRepository(target);
 }
 

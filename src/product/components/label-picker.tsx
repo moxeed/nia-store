@@ -1,60 +1,45 @@
-import React, { useEffect, useState } from "react"
-import { AutoComplete, Panel } from "rsuite";
-import { Label } from "../entities/label";
-import { Tag } from "../entities/tag";
-import { TagAdder } from "./tag-adder";
+import {useEffect, useState} from "react"
+import {AutoComplete} from "rsuite"
+import {Label} from "../entities/label";
 
-export const LabelPicker = (props: { tags?: Array<Tag>, setTags: (tags: Array<Tag>) => void }) => {
+export const LabelPicker = (props: { onSelect: (label: Label) => void }) => {
 
-    const setTags = props.setTags
-    const tags = props.tags ?? new Array<Tag>()
+    const {onSelect} = props;
 
-    const [create, setCreate] = useState<boolean>(false)
-    const [key, setKey] = useState<string>("")
-    const [foundTags, setFoundTags] = useState<Array<Tag>>(new Array<Tag>())
+    const [term, setTerm] = useState<string>("");
+    const [foundLabels, setFoundLabels] = useState<Array<Label>>(new Array<Label>());
 
-    const addTag = (tag: Tag) => {
-
-        if (!tag.label.value) {
-            setCreate(true);
-            return;
-        }
-
-        tags.push(tag)
-        setTags(tags)
-        setCreate(false);
+    const handleSelect = (label: Label) => {
+        fetch("/api/label", {
+            method: "POST",
+            body: JSON.stringify(label)
+        })
+            .then(res => res.json())
+            .then((label: Label) => onSelect(label))
     }
 
     useEffect(() => {
-        fetch(`/api/tag?term=${key}`)
+        fetch(`/api/label?term=${term}`)
             .then(res => res.json())
-            .then(tags => setFoundTags(tags))
-    }, [key])
+            .then(labels => setFoundLabels(labels))
+    }, [term])
 
-    const data = foundTags.map(tag => ({
-        value: `${tag.label.value}:${tag.key}`,
-        label: `${tag.label.value}:${tag.key}`,
-        tag
+    const data = foundLabels.map(label => ({
+        value: `${label.value}`,
+        label: `${label.value}`,
+        data: label
     }));
 
-    if (!data.some(d => d.tag.key === key)) {
+    if (!data.some(d => d.value === term)) {
         data.push({
-            value: `${key}`,
-            label: `${key}`,
-            tag: {
-                key: key,
-                label: new Label()
+            value: `${term}`,
+            label: `${term}`,
+            data: {
+                value: term
             }
         })
     }
 
-    return (
-        <>
-            <Panel header="تگ ها" bordered>
-                <AutoComplete data={data} onSelect={(_, e) => addTag(e.tag)} onChange={setKey} placement="bottomEnd" />
-                {tags.map(tag => <p>{tag.label.value}:{tag.key}</p>)}
-            </Panel>
-            <TagAdder open={create} value={key} addTag={addTag} />
-        </>
-    );
+    return <AutoComplete data={data} onSelect={(_, e) => handleSelect(e.data)} onChange={setTerm}
+                         placement="bottomEnd"/>
 }

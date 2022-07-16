@@ -1,5 +1,7 @@
 import 'rsuite/dist/rsuite.min.css';
+import "tailwindcss/tailwind.css"
 import '../styles/globals.css'
+    
 import type { AppProps } from 'next/app'
 import { Container, Content, Header, Nav, Navbar } from 'rsuite';
 
