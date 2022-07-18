@@ -2,12 +2,12 @@ import 'reflect-metadata'
 import { DataSource, EntityTarget, ObjectLiteral, Repository } from "typeorm";
 import { Label } from '../product/entities/label';
 import {Picture, Product, Specification} from '../product/entities/product';
-import { Tag } from '../product/entities/tag';
+import { Option } from '../product/entities/option';
 
 const AppDataSource = new DataSource({
     type: "sqlite",
     database: "./storage/db.sqlite",
-    entities: [Product, Tag, Label, Picture, Specification],
+    entities: [Product, Option, Label, Picture, Specification],
     synchronize: true
 })
 

@@ -1,29 +1,23 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { getRepository } from '../../../database/datasource';
-import { Product } from '../../../product/entities/product';
-
-const handlePut = async (
-    req: NextApiRequest,
-    res: NextApiResponse<any>
-) => {
-    const product = JSON.parse(req.body) as Product;
-    console.log(product);
-
-    const repository = await getRepository(Product);
-    await repository.save(product);
-
-    res.status(200).json({ name: 'John Doe' });
-}
+import {Product} from "../../../product/entities/product";
+import {getRepository} from "../../../database/datasource";
+import {ProductBrief} from "../../../product/models/product-brief";
+import {Like} from "typeorm";
 
 export default async function handler(
     req: NextApiRequest,
-    res: NextApiResponse<any>
+    res: NextApiResponse<Array<ProductBrief>>
 ) {
-    if (req.method === "PUT")
-        return await handlePut(req, res);
+    const filters = req.query["filters"] as string
+    const like = filters?.replace("-", "%")
+    const repository = await getRepository(Product)
+    
+    const products = filters ? await repository.find({
+        where:{
+            optionsIndex: Like(`%${like}%`)
+        }
+    }) : await repository.find(); 
 
-    const repository = await getRepository(Product);
-    const products = await repository.find();
-
-    res.status(200).json(products);
+    const productBriefs = products.map(p => ({...p, file: p.pictures[0]?.file}))
+    res.status(200).json(productBriefs);
 }

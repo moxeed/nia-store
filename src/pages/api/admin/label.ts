@@ -1,7 +1,7 @@
 import {NextApiRequest, NextApiResponse} from "next";
 import {Like} from "typeorm";
-import {getConnection, getRepository} from "../../database/datasource";
-import {Label} from "../../product/entities/label";
+import {Label} from "../../../product/entities/label";
+import {getConnection, getRepository} from "../../../database/datasource";
 
 const handlePost = async (
     req: NextApiRequest,

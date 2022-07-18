@@ -1,8 +1,25 @@
-import type { NextPage } from 'next'
-import { ProductEditor } from '../../product/components/product-editor'
+import type {NextPage, NextPageContext} from 'next'
+import Layout from "../layout";
+import {ProductBrief} from "../../product/models/product-brief";
+import {ProductCard} from "../../product/components/product-card";
 
-const AddProduct: NextPage = () => {
-    return <ProductEditor />;
+interface Props {
+    products?: Array<ProductBrief>
 }
 
-export default AddProduct
+const ProductSearchPage: NextPage<Props> = ({products}) => {
+    return <Layout>
+        {products?.map(p => <ProductCard product={p}/>)}
+    </Layout>
+}
+
+ProductSearchPage.getInitialProps = async (ctx: NextPageContext) => {
+    const filters = ctx.query["filters"]
+    console.log(filters)
+    const data = await fetch(`http://localhost:3000/api/product?filters=${filters??""}`);
+    const products = await data.json();
+
+    return {products: products as Array<ProductBrief>}
+}
+
+export default ProductSearchPage

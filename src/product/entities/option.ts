@@ -2,7 +2,7 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Label } from "./label";
 
 @Entity()
-export class Tag {
+export class Option {
     @PrimaryGeneratedColumn()
     id?: number
 

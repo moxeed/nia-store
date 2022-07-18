@@ -1,11 +1,11 @@
 import {useEffect, useRef, useState} from "react"
 import {AutoComplete, Input, Modal} from "rsuite"
 import { Label } from "../entities/label";
-import { Tag } from "../entities/tag"
+import { Option } from "../entities/option"
 import {LabelPicker} from "./label-picker";
 import {PickerInstance} from "rsuite/Picker";
 
-export const TagLabelPicker = (props: { open: boolean, value: string, addTag: (tag: Tag) => void }) => {
+export const TagLabelPicker = (props: { open: boolean, value: string, addTag: (tag: Option) => void }) => {
 
     const { open, value, addTag } = props
     

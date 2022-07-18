@@ -10,7 +10,7 @@ export const LabelPicker = (props: { onSelect: (label: Label) => void }) => {
     const [foundLabels, setFoundLabels] = useState<Array<Label>>(new Array<Label>());
 
     const handleSelect = (label: Label) => {
-        fetch("/api/label", {
+        fetch("/api/admin/label", {
             method: "POST",
             body: JSON.stringify(label)
         })
@@ -19,7 +19,7 @@ export const LabelPicker = (props: { onSelect: (label: Label) => void }) => {
     }
 
     useEffect(() => {
-        fetch(`/api/label?term=${term}`)
+        fetch(`/api/admin/label?term=${term}`)
             .then(res => res.json())
             .then(labels => setFoundLabels(labels))
     }, [term])

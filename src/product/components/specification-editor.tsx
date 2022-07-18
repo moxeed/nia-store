@@ -28,10 +28,11 @@ export const SpecificationEditor = (props: {
     }
 
     return <Panel header="مشخصات" bordered className="pb-2 pt-2">
+        <LabelPicker onSelect={addLabel}/>
         {specifications?.map((spec, i) => (
             <FlexboxGrid className="pt-2 pb-2">
                 <FlexboxGrid.Item colspan={2}>
-                    <Button className="w-full" onClick={removeLabel(i)}>X</Button>
+                    <Button appearance="ghost" className="w-full" onClick={removeLabel(i)}>X</Button>
                 </FlexboxGrid.Item>
                 <FlexboxGrid.Item colspan={6}>
                     <Input className="w-full" value={spec.label.value} disabled/>
@@ -41,6 +42,5 @@ export const SpecificationEditor = (props: {
                 </FlexboxGrid.Item>
             </FlexboxGrid>
         ))}
-        <LabelPicker onSelect={addLabel}/>
     </Panel>
 }

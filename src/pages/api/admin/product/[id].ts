@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { getRepository } from '../../../database/datasource';
-import { Product } from '../../../product/entities/product';
+import {Product} from "../../../../product/entities/product";
+import {getRepository} from "../../../../database/datasource";
 
 export default async function handler(
     req: NextApiRequest,

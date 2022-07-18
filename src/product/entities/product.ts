@@ -9,7 +9,7 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn
 } from "typeorm";
-import { Tag } from "./tag";
+import { Option } from "./option";
 import {Label} from "./label";
 import {TSNumberKeyword} from "@typescript-eslint/types/dist/generated/ast-spec";
 
@@ -34,12 +34,17 @@ export class Product {
     })
     description!: string
     
-    @ManyToMany(() => Tag, {
+    @ManyToMany(() => Option, {
         eager: true,
         cascade: true
     })
     @JoinTable()
-    tags!: Array<Tag>
+    options!: Array<Option>
+    
+    @Column({
+        nullable: true
+    })
+    optionsIndex?:string
 
     @OneToMany(() => Picture, (picture) => picture.product, {
         eager: true,
@@ -66,10 +71,10 @@ export class Picture {
     id?: number
 
     @Column()
-    fileId!: number
+    file!: string
 
     @ManyToOne(() => Product, (product) => product.pictures)
-    product!: Product
+    product?: Product
 }
 
 @Entity()

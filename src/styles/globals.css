@@ -1,3 +1,6 @@
+@import '~rsuite/dist/rsuite-rtl.min.css';
+@import "tailwindcss/tailwind.css";
+
 html,
 body {
   padding: 0;
