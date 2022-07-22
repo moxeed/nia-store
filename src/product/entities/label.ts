@@ -7,4 +7,9 @@ export class Label {
 
     @Column({ length: 128 })
     value!: string
+    
+    @Column({
+        nullable: true,
+    })
+    isMajor!:boolean
 }

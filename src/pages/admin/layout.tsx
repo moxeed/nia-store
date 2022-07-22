@@ -1,4 +1,4 @@
-import {Content, Nav, Sidebar, Sidenav} from 'rsuite';
+import {Content, CustomProvider, Nav, Sidebar, Sidenav} from 'rsuite';
 import {LayoutProps} from "next/dist/lib/app-layout";
 import {useState} from "react";
 import Link from "next/link";

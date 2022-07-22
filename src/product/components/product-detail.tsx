@@ -1,7 +1,8 @@
 import {Product, Specification} from "../entities/product";
-import {Carousel, Col, Panel, Row} from "rsuite";
+import {Carousel, Col, Divider, Panel, Row} from "rsuite";
 import {Option} from "../entities/option";
 import {Label} from "../entities/label";
+import {Price} from "./product-card";
 
 const groupByLabel = (options: Array<Option>): Array<{ label: Label, options: Array<Option> }> => {
     const grouped = new Map<number, { label: Label, options: Array<Option> }>();
@@ -21,8 +22,8 @@ const OptionComponent = ({options}: { options: Array<Option> }) => {
     return <>
         {groupedOptions.map(g =>
             <Row className="px-7">
-                <p className="text-lg py-1">{g.label.value}</p>
-                {g.options.map(o => <p className="inline-block text-rose-100 bg-rose-500 px-4 m-1 rounded">{o.key}</p>)}
+                <p className="py-1">{g.label.value}</p>
+                {g.options.map(o => <p className="inline-block text-rose-100 bg-rose-500 px-4 py-1 m-1 rounded">{o.key}</p>)}
             </Row>
         )}
     </>
@@ -32,12 +33,12 @@ const SpecificationComponent = ({specifications}: { specifications: Array<Specif
 
     return <>
         {specifications.map(s =>
-            <Row>
+            <Row className="rounded overflow-hidden">
                 <Col xs={8} className="p-0">
                     <p className="bg-gray-300 p-2 pr-5">{s.label.value}</p>
                 </Col>
                 <Col xs={16} className="p-0">
-                    <p className="bg-gray-100 p-2 pr-5">{s.key}</p>
+                    <p className="bg-gray-200 p-2 pr-5">{s.key}</p>
                 </Col>
             </Row>
         )}
@@ -47,26 +48,21 @@ const SpecificationComponent = ({specifications}: { specifications: Array<Specif
 export const ProductDetail = ({product}: { product: Product }) => {
 
     return <Col>
-        <Row>
+        <div className="bg-gray-100 m-1 rounded-lg overflow-hidden">
             <Carousel shape="bar" placement="bottom">
                 {product.pictures?.map(p => <img alt={product.name} src={"/files/" + p.file}/>)}
             </Carousel>
-        </Row>
-        <Row className="p-4">
-            <Col xs={12}>
+            <div className="px-6 py-2">
                 <p className="text-xl">{product.name}</p>
-            </Col>
-            <Col xs={12}>
-                <p className="text-xl text-green-600">{product.price} ریال</p>
-            </Col>
-        </Row>
-        <Row className="p-4">
-            <p>{product.description}</p>
-        </Row>
-        <Row>
+                <Price value={product.price}/>
+                <Divider className="m-3"/>
+                <p>{product.description}</p>
+            </div>
+        </div>
+        <Row className="bg-gray-100 m-1 py-2 rounded-lg overflow-hidden">
             <OptionComponent options={product.options}/>
         </Row>
-        <Panel header="مشخصات">
+        <Panel header="مشخصات" className="bg-gray-100 m-1 rounded-lg overflow-hidden">
             <SpecificationComponent specifications={product.specifications}/>
         </Panel>
     </Col>

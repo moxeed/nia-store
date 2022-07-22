@@ -1,3 +1,5 @@
+import {Option} from "../entities/option";
+
 export interface ProductBrief {
     id: number
 
@@ -6,6 +8,8 @@ export interface ProductBrief {
     name: string
     
     file?: string
+    
+    options?: Array<Option>
 
     createDateTime: Date
 

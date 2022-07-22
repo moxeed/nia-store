@@ -1,4 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type {NextApiRequest, NextApiResponse} from 'next'
 import {Product} from "../../../product/entities/product";
 import {getRepository} from "../../../database/datasource";
 import {ProductBrief} from "../../../product/models/product-brief";
@@ -11,12 +11,27 @@ export default async function handler(
     const filters = req.query["filters"] as string
     const like = filters?.replace("-", "%")
     const repository = await getRepository(Product)
-    
+
     const products = filters ? await repository.find({
-        where:{
+        select: {
+            id: true,
+            name: true,
+            price: true,
+            pictures: true,
+            options: true,
+        },
+        where: {
             optionsIndex: Like(`%${like}%`)
         }
-    }) : await repository.find(); 
+    }) : await repository.find({
+        select: {
+            id: true,
+            name: true,
+            price: true,
+            pictures: true,
+            options: true,
+        }
+    });
 
     const productBriefs = products.map(p => ({...p, file: p.pictures[0]?.file}))
     res.status(200).json(productBriefs);
