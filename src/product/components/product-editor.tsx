@@ -1,19 +1,24 @@
 import React, {useState} from "react"
-import {Button, FlexboxGrid, Form, Input, Panel} from "rsuite";
+import {Button, FlexboxGrid, Form, Input, Message, Panel, toaster, useToaster} from "rsuite";
 import {Picture, Product, Specification} from "../entities/product"
 import {Option} from "../entities/option";
 import {OptionsPicker} from "./options-picker";
 import {SpecificationEditor} from "./specification-editor";
 import {ImagePicker} from "./image-picker";
 
+const message = <Message showIcon type="success">
+    با موفقیت ثبت شد
+</Message>
+
 export const ProductEditor = (props: { product?: Product }) => {
     const [product, setProduct] = useState<Product>(props.product ?? new Product());
+    const toast = useToaster()
 
     const save = () => {
         fetch("/api/admin/product", {
             method: "PUT",
             body: JSON.stringify(product)
-        })
+        }).then(() => toast.push(message))
     }
 
     const setTags = (tags: Array<Option>) => setProduct({...product, options: tags});
@@ -21,8 +26,8 @@ export const ProductEditor = (props: { product?: Product }) => {
     const setPictures = (pictures: Array<Picture>) => setProduct({...product, pictures});
 
     return (
-        <FlexboxGrid justify="center">
-            <FlexboxGrid.Item colspan={22}>
+        <FlexboxGrid justify="center" className="bg-white m-2 rounded p-5 pb-5">
+            <FlexboxGrid.Item colspan={24}>
                 <ImagePicker pictures={product.pictures} setPictures={setPictures}/>
                 <Panel header="اطلاعات اصلی" className="mt-2" bordered>
                     <Form.ControlLabel className="text-lg">قیمت</Form.ControlLabel>

@@ -11,5 +11,5 @@ export class Label {
     @Column({
         nullable: true,
     })
-    isMajor!:boolean
+    isMajor?:boolean
 }

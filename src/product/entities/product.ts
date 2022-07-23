@@ -9,9 +9,8 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn
 } from "typeorm";
-import { Option } from "./option";
+import {Option} from "./option";
 import {Label} from "./label";
-import {TSNumberKeyword} from "@typescript-eslint/types/dist/generated/ast-spec";
 
 @Entity()
 export class Product {
@@ -33,18 +32,18 @@ export class Product {
         length: 512
     })
     description!: string
-    
+
     @ManyToMany(() => Option, {
         eager: true,
         cascade: true
     })
     @JoinTable()
     options!: Array<Option>
-    
+
     @Column({
         nullable: true
     })
-    optionsIndex?:string
+    optionsIndex?: string
 
     @OneToMany(() => Picture, (picture) => picture.product, {
         eager: true,
@@ -57,7 +56,7 @@ export class Product {
         cascade: true
     })
     specifications!: Array<Specification>
-    
+
     @CreateDateColumn()
     createDateTime!: Date
 
@@ -93,4 +92,38 @@ export class Specification {
 
     @ManyToOne(() => Product)
     product?: Product
+}
+
+const createIndex = (options: Array<Option>) => {
+    return options.map(o => `${o.label.id}:${o.id}`).sort()
+}
+
+export const updateIndex = (product: Product) => {
+    product.optionsIndex = createIndex(product.options).join("-")
+}
+
+export const normalizeIndex = (index?: string) => {
+    if (!index)
+        return ".*"
+    
+    const keys = index.split('-')
+        .filter(v => v.length > 0)
+        .sort()
+    
+    let last = "";
+    let result = "%" 
+    for (const key of keys){
+        const [label, value] = key.split(':')
+        
+        if (label !== last){
+            last = label
+            result += label + ':('
+            
+            result += result[result.length - 1] == '|' ? '0)%' : ""
+        }
+        
+        result += value + '|'
+    }
+    
+    return result + "0)%"
 }

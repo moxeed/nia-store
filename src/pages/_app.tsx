@@ -7,7 +7,7 @@ import React from "react";
 
 function MyApp({Component, pageProps}: AppProps) {
     return (
-        <Container dir='rtl' className="bg-gray-200" style={{height:"100%"}}>
+        <Container dir='rtl' className="bg-gray-100" style={{height:"100%"}}>
             <Component {...pageProps} />
         </Container>
     )

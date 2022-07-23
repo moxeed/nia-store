@@ -5,10 +5,15 @@ import {Picture, Product, Specification} from '../product/entities/product';
 import { Option } from '../product/entities/option';
 
 const AppDataSource = new DataSource({
-    type: "sqlite",
-    database: "./storage/db.sqlite",
+    type: "postgres",
+    host: "localhost",
+    port: 5433,
+    username: "postgres",
+    password: "1234",
+    database: "nia_store",
+    synchronize: true,
+    logging: true,
     entities: [Product, Option, Label, Picture, Specification],
-    synchronize: true
 })
 
 export const getConnection = async (): Promise<DataSource> => {

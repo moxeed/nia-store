@@ -54,7 +54,7 @@ export const OptionsPicker = (props: { tags?: Array<Option>, setTags: (tags: Arr
                 <AutoComplete data={data} onSelect={(_, e) => addTag(e.tag)} onChange={setKey} placement="bottomEnd"/>
                 {tags.map(tag => <p className="pt-2 pr-4">{tag.label.value}:{tag.key}</p>)}
             </Panel>
-            <TagLabelPicker open={create} value={key} addTag={addTag}/>
+            <TagLabelPicker open={create} value={key} addTag={addTag} onClose={() => setCreate(false)}/>
         </div>
     );
 }

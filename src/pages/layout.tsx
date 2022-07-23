@@ -57,7 +57,7 @@ function Layout({children}: LayoutProps) {
     return (
         <>
             <Header className="m-1">
-                <Input className="px-5 py-3 bg-gray-100" placeholder="جستجو.."/>            </Header>
+                <Input className="px-5 py-3 bg-white" placeholder="جستجو.."/>            </Header>
             <Content className="overflow-y-scroll overflow-x-hidden">
                 {children}
             </Content>

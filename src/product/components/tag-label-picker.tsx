@@ -5,9 +5,9 @@ import { Option } from "../entities/option"
 import {LabelPicker} from "./label-picker";
 import {PickerInstance} from "rsuite/Picker";
 
-export const TagLabelPicker = (props: { open: boolean, value: string, addTag: (tag: Option) => void }) => {
+export const TagLabelPicker = (props: { open: boolean, value: string, addTag: (tag: Option) => void, onClose: () => void }) => {
 
-    const { open, value, addTag } = props
+    const { open, value, addTag, onClose } = props
     
     const handleSelect = (label:Label) => {
         addTag({
@@ -20,7 +20,7 @@ export const TagLabelPicker = (props: { open: boolean, value: string, addTag: (t
         
     },[])
     
-    return <Modal open={open} dir="rtl">
+    return <Modal open={open} dir="rtl" onClose={onClose}>
         <p>عنوان را انتخاب کنید</p>
         <LabelPicker onSelect={handleSelect}/>
     </Modal>

@@ -6,11 +6,11 @@ export const Price = ({value}: { value: number }) => <div className="text-green-
     {value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ریال
 </div>
 
-export const ProductCard = (props: { product: ProductBrief }) => {
-    const {product} = props
+export const ProductCard = (props: { product: ProductBrief, baseUrl: string }) => {
+    const {product, baseUrl} = props
 
-    return <Link href={"/product/" + product.id}>
-        <Row className="m-2 mt-1 bg-gray-100 rounded-xl overflow-hidden">
+    return <Link href={`${baseUrl}/${product.id}`}>
+        <Row className="m-2 mt-1 bg-white rounded-xl overflow-hidden">
             <Col className="p-0" xs={12}>
                 <img alt={product.name} src={"/files/" + product.file}></img>
             </Col>
@@ -21,7 +21,7 @@ export const ProductCard = (props: { product: ProductBrief }) => {
                 </Row>
                 <Row>
                     {product.options?.map(o =>
-                        <div className="inline-block ml-2 mt-1 px-2 py-1 bg-rose-500 text-white rounded text-xs">
+                        <div key={o.id} className="inline-block ml-2 mt-1 px-2 py-1 bg-rose-500 text-white rounded text-xs">
                             {o.key}
                         </div>)}
                 </Row>

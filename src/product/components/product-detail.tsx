@@ -35,10 +35,10 @@ const SpecificationComponent = ({specifications}: { specifications: Array<Specif
         {specifications.map(s =>
             <Row className="rounded overflow-hidden">
                 <Col xs={8} className="p-0">
-                    <p className="bg-gray-300 p-2 pr-5">{s.label.value}</p>
+                    <p className="bg-gray-200 p-2 pr-5">{s.label.value}</p>
                 </Col>
                 <Col xs={16} className="p-0">
-                    <p className="bg-gray-200 p-2 pr-5">{s.key}</p>
+                    <p className="bg-gray-100 p-2 pr-5">{s.key}</p>
                 </Col>
             </Row>
         )}
@@ -48,7 +48,7 @@ const SpecificationComponent = ({specifications}: { specifications: Array<Specif
 export const ProductDetail = ({product}: { product: Product }) => {
 
     return <Col>
-        <div className="bg-gray-100 m-1 rounded-lg overflow-hidden">
+        <div className="bg-white m-1 rounded-lg overflow-hidden">
             <Carousel shape="bar" placement="bottom">
                 {product.pictures?.map(p => <img alt={product.name} src={"/files/" + p.file}/>)}
             </Carousel>
@@ -59,10 +59,10 @@ export const ProductDetail = ({product}: { product: Product }) => {
                 <p>{product.description}</p>
             </div>
         </div>
-        <Row className="bg-gray-100 m-1 py-2 rounded-lg overflow-hidden">
+        <Row className="bg-white m-1 py-2 rounded-lg overflow-hidden">
             <OptionComponent options={product.options}/>
         </Row>
-        <Panel header="مشخصات" className="bg-gray-100 m-1 rounded-lg overflow-hidden">
+        <Panel header="مشخصات" className="bg-white m-1 rounded-lg overflow-hidden">
             <SpecificationComponent specifications={product.specifications}/>
         </Panel>
     </Col>
