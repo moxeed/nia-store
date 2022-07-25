@@ -36,7 +36,7 @@ export const Header = () => {
     const toggle = () => setExpanded(!expanded);
 
     return (<> <Navbar className={classes.mainNav}>
-        <Navbar.Brand href="/" className={classes.logo}> <Image src={Logo} alt="logo" width={35}
+        <Navbar.Brand className={classes.logo}> <Image src={Logo} alt="logo" width={35}
             height={25} />نیاکالا</Navbar.Brand>
         <Nav className={classes.responsiveHide}>
             {products.map((item, _id) => (<Nav.Menu title={item.title} key={_id}>

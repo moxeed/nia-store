@@ -47,7 +47,7 @@ const SpecificationComponent = ({specifications}: { specifications: Array<Specif
 
 export const ProductDetail = ({product}: { product: Product }) => {
 
-    return <Col>
+    return <>
         <div className="bg-white m-1 rounded-lg overflow-hidden">
             <Carousel shape="bar" placement="bottom">
                 {product.pictures?.map(p => <img alt={product.name} src={"/files/" + p.file}/>)}
@@ -65,5 +65,5 @@ export const ProductDetail = ({product}: { product: Product }) => {
         <Panel header="مشخصات" className="bg-white m-1 rounded-lg overflow-hidden">
             <SpecificationComponent specifications={product.specifications}/>
         </Panel>
-    </Col>
+    </>
 }

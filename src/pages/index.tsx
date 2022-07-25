@@ -6,7 +6,7 @@ import Layout from './layout';
 
 const Home: NextPage = () => {
   return (
-    <Layout>
+    <Layout areaScope="/">
       <div className={styles.container}>
         {/* <BrandHeader />
         <Header /> */}
