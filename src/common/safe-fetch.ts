@@ -1,6 +1,4 @@
 ﻿import {useEffect} from "react";
-import {scalarOptions} from "yaml";
-import Str = scalarOptions.Str;
 
 export const safeFetch = (url: string, body?: any): [Promise<any>, () => void] => {
     let active = true

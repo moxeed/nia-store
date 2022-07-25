@@ -6,10 +6,10 @@ import { Option } from '../product/entities/option';
 
 const AppDataSource = new DataSource({
     type: "postgres",
-    host: "localhost",
-    port: 5433,
+    host: "94.101.187.218",
+    port: 5432,
     username: "postgres",
-    password: "1234",
+    password: "mysecretpassword",
     database: "nia_store",
     synchronize: true,
     logging: true,

@@ -14,4 +14,9 @@ export class Option {
         eager: true
     })
     label!: Label
+
+    @Column({
+        default:false
+    })
+    isFeatured?: boolean
 }
