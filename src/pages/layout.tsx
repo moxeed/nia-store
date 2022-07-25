@@ -65,7 +65,7 @@ function Layout({children}: LayoutProps) {
                 <Nav reversed appearance="subtle" className="text-center bg-gray-600 rounded-t-xl" onSelect={setActive}
                      justified >
                     <Nav.Item className="py-6 text-gray-200" eventKey={states.category}>دسته بندی</Nav.Item>
-                    <Nav.Item className="py-6 text-gray-200" eventKey={states.home}>نیا کالا</Nav.Item>
+                    <Nav.Item className="py-6 text-gray-200" eventKey={states.home} href="/">نیا کالا</Nav.Item>
                     <Nav.Item className="py-6 text-gray-200" eventKey={states.menu}>فیلتر</Nav.Item>
                 </Nav>
             </Footer>

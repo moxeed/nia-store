@@ -1,5 +1,13 @@
 .container {
-  padding: 0 2rem;
+  padding: 0 5rem;
+  min-height: 82vh;
+  position: relative;
+}
+
+@media (max-width: 900px) {
+  .container {
+    padding: 0px;
+  }
 }
 
 .main {
