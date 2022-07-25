@@ -1,24 +1,60 @@
-@import '~rsuite/dist/rsuite-rtl.min.css';
+@import "~rsuite/dist/rsuite-rtl.min.css";
 @import "tailwindcss/tailwind.css";
 
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  height: 100%;
+@font-face {
+  font-family: Vazir;
+  src: url("../../assets/font/Vazir.ttf");
 }
 
-a {
-  color: inherit;
-  text-decoration: none !important;
+html {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+body {
+  box-sizing: border-box;
+  background-color: #fff;
 }
 
 * {
-  box-sizing: border-box;
+  font-family: Vazir, sans-serif;
 }
 
-#__next {
-  height: 100%;
+:root {
+  --primary-blue: #097eac;
+  --primary-blue-bold: #02377a;
+  --secondary-bg: white;
+  --bg-light: #f9fcfd;
+
+  --light-blue: #009dbb;
+  --navy-blue: #097eac;
+  --green-blue: #00bbb5;
+  --primary-green: ##44d59f;
+  --light-green: ##a1ea83;
+  --yellow: #f9f871;
+}
+
+.primaryButton {
+  background-color: var(--primary-blue);
+  color: white;
+  width: max-content;
+  min-height: 40px;
+  min-width: 120px;
+  padding: 6px 12px;
+  margin: 6px;
+  display: flex;
+  align-items: center;
+  justify-self: center;
+}
+
+.primaryButton:hover {
+  background-color: var(--primary-blue-bold);
+  color: white;
+}
+.responsiveImg {
+  width: 100%;
+  height: auto;
 }
