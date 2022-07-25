@@ -35,7 +35,7 @@ const Intro = () => {
         <p className={classes.subtitle}>به نیاکالا خوش آمدید، نیاکالا با لوازم خانگی و جهزیه در خدمت شماست.</p>
         <p className={classes.subtitle}>به نیاکالا خوش آمدید، نیاکالا با لوازم خانگی و جهزیه در خدمت شماست.</p>
         <p className={classes.subtitle}>به نیاکالا خوش آمدید، نیاکالا با لوازم خانگی و جهزیه در خدمت شماست.</p>
-        <Button className={"primaryButton"}>
+        <Button className={"primaryButton"} href="/product">
             <ShopIcon /> الان خرید کنید
         </Button>
     </Container>)

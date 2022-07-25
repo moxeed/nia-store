@@ -44,7 +44,7 @@ body {
   min-height: 40px;
   min-width: 120px;
   padding: 6px 12px;
-  margin: 6px;
+  margin: auto;
   display: flex;
   align-items: center;
   justify-self: center;
