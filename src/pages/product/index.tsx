@@ -10,7 +10,7 @@ interface Props {
 }
 
 const ProductSearchPage: NextPage<Props> = ({products}) => {
-    return <Layout>
+    return <Layout areaScope="/">
         {products?.map(p => <ProductCard key={p.id} product={p} baseUrl="/product"/>)}
     </Layout>
 }

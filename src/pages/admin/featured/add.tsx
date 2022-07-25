@@ -1,9 +1,9 @@
 import {NextPage} from "next";
-import Layout from "../layout";
 import {FeaturedEditor} from "../../../product/components/option/featured-editor";
+import Layout from "../../layout";
 
 const ProductPage: NextPage = () => {
-    return <Layout>
+    return <Layout areaScope="/admin">
         <FeaturedEditor/>
     </Layout>
 }

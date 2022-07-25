@@ -1,16 +1,20 @@
-import {Content, Drawer, Footer, Header, Input, Nav, Navbar, Row, Sidenav, TagInput} from 'rsuite';
+import {Content, Drawer, Footer, Header, Input, Nav, Sidenav} from 'rsuite';
 import {LayoutProps} from "next/dist/lib/app-layout";
-import React, {ReactNode, useEffect, useState} from "react";
+import React, {ReactNode, useState} from "react";
 import {Option} from "../product/entities/option";
 import {Label} from "../product/entities/label";
 import {useRouter} from "next/router";
 import Link from "next/link";
+import {Check} from "@rsuite/icons";
+import {Query} from "../common/query";
+import {useApi} from "../common/safe-fetch";
 
 const states = {
     category: "category",
     home: "home",
     menu: "menu"
 }
+
 
 const groupByLabel = (options: Array<Option>): Array<{ label: Label, options: Array<Option> }> => {
     const grouped = new Map<number, { label: Label, options: Array<Option> }>();
@@ -24,48 +28,71 @@ const groupByLabel = (options: Array<Option>): Array<{ label: Label, options: Ar
     return Array.from(grouped.values())
 }
 
-const LinkItem = ({href, children}: { href: string, children: ReactNode }) =>
+const LinkItem = ({href, children, onClick}: { href: string, children: ReactNode, onClick?: () => void }) =>
     <Nav.Item>
         <Link href={href}>
-            <a className="block w-full h-full">
+            <div onClick={onClick} className="block w-full h-full">
                 {children}
-            </a>
+            </div>
         </Link>
     </Nav.Item>
 
-function Layout({children}: LayoutProps) {
-    const [active, setActive] = useState('home')
-    const [options, setOptions] = useState(new Array<Option>())
-    const [majorOptions, setMajorOptions] = useState(new Array<Option>())
-
+function Layout({children, areaScope}: { children: any, areaScope: "/admin" | "/" }) {
     const router = useRouter()
 
-    const currentFilters = router.query["filters"]
+    const [active, setActive] = useState('home')
+    const [search, setSearch] = useState()
+    const [options, setOptions] = useState(new Array<Option>())
+    const [majorOptions, setMajorOptions] = useState(new Array<Option>())
+    const {filters}: { filters?: string } = router.query
+
     const groupedOptions = groupByLabel(options)
     const groupedMajorOptions = groupByLabel(majorOptions)
 
-    useEffect(() => {
-        fetch("/api/option")
-            .then(res => res.json())
-            .then(setOptions)
+    const isActive = (option: Option): boolean | undefined => {
+        const key = `${option.label.id}:${option.id}`
+        return filters?.split("-").some(a => a == key)
+    }
 
-        fetch("/api/option?major=true")
-            .then(res => res.json())
-            .then(setMajorOptions)
-    }, [])
+    const afterClickQuery = (option: Option) => {
+        const key = `${option.label.id}:${option.id}`
+        const newFilters = filters?.split("-") ?? []
+
+        if (isActive(option)) {
+            return Query({
+                filters: newFilters
+                    .filter(a => a !== key)
+                    .join("-")
+            })
+        }
+
+        newFilters.push(key)
+        return Query({filters: newFilters.join("-")})
+    }
+
+    useApi({
+        url: "/api/option" + Query({filters}),
+        callback: setOptions
+    }, [filters])
+
+    useApi({
+        url: "/api/option?major=true",
+        callback: setMajorOptions
+    }, [filters])
 
     return (
         <>
             <Header className="m-1">
-                <Input className="px-5 py-3 bg-white" placeholder="جستجو.."/>            </Header>
+                <Input className="px-5 py-3 bg-white" placeholder="جستجو.."/>
+            </Header>
             <Content className="overflow-y-scroll overflow-x-hidden">
                 {children}
             </Content>
             <Footer>
                 <Nav reversed appearance="subtle" className="text-center bg-gray-600 rounded-t-xl" onSelect={setActive}
-                     justified >
+                     justified>
                     <Nav.Item className="py-6 text-gray-200" eventKey={states.category}>دسته بندی</Nav.Item>
-                    <Nav.Item className="py-6 text-gray-200" eventKey={states.home} href="/">نیا کالا</Nav.Item>
+                    <Nav.Item href={areaScope} className="py-6 text-gray-200" eventKey={states.home}>نیا کالا</Nav.Item>
                     <Nav.Item className="py-6 text-gray-200" eventKey={states.menu}>فیلتر</Nav.Item>
                 </Nav>
             </Footer>
@@ -78,9 +105,9 @@ function Layout({children}: LayoutProps) {
                 <Drawer.Body className="text-right p-3">
                     <Sidenav>
                         <Nav>
-                            {groupedMajorOptions.map(g => <Nav.Menu title={g.label.value}>
+                            {groupedMajorOptions.map(g => <Nav.Menu key={g.label.id} title={g.label.value}>
                                 {g.options.map(o =>
-                                    <LinkItem href={`/product?filters=${currentFilters ?? ""}-${g.label.id}:${o.id}`}>
+                                    <LinkItem key={o.id} href={`${areaScope}/product/${afterClickQuery(o)}`}>
                                         {o.key}
                                     </LinkItem>
                                 )}
@@ -98,15 +125,17 @@ function Layout({children}: LayoutProps) {
                 <Drawer.Body className="text-right p-3">
                     <Sidenav>
                         <Nav>
-                            {currentFilters &&
-                                <LinkItem href={"/product"}>
+                            {filters &&
+                                <LinkItem href={`${areaScope}/product`}>
                                     حذف فیلتر ها
                                 </LinkItem>
                             }
-                            {groupedOptions.map(g => <Nav.Menu title={g.label.value}>
+                            {groupedOptions.map(g => <Nav.Menu key={g.label.id} title={g.label.value}>
                                 {g.options.map(o =>
-                                    <LinkItem href={`/product?filters=${currentFilters ?? ""}-${g.label.id}:${o.id}`}>
+                                    <LinkItem key={o.id} href={`${areaScope}/product/${afterClickQuery(o)}`}>
                                         {o.key}
+                                        {isActive(o) ? <Check className="ml-2 text-3xl" fill="green"/> :
+                                            <Check className="ml-2 text-3xl" fill="gray"/>}
                                     </LinkItem>
                                 )}
                             </Nav.Menu>)}
