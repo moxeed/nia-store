@@ -3,17 +3,18 @@ import { DataSource, EntityTarget, ObjectLiteral, Repository } from "typeorm";
 import { Label } from '../product/entities/label';
 import {Picture, Product, Specification} from '../product/entities/product';
 import { Option } from '../product/entities/option';
+import {FeaturedOption} from "../product/entities/featuredOption";
 
 const AppDataSource = new DataSource({
     type: "postgres",
     host: "localhost",
-    port: 5433,
+    port: 5432,
     username: "postgres",
-    password: "1234",
+    password: "1qaz@WSX",
     database: "nia_store",
     synchronize: true,
     logging: true,
-    entities: [Product, Option, Label, Picture, Specification],
+    entities: [Product, Option, Label, Picture, Specification, FeaturedOption],
 })
 
 export const getConnection = async (): Promise<DataSource> => {

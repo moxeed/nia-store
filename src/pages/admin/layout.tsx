@@ -8,7 +8,6 @@ import Link from "next/link";
 import {Check} from "@rsuite/icons";
 import {Query} from "../../common/query";
 import {useApi} from "../../common/safe-fetch";
-import {CheckCircle, CheckSquare} from "@rsuite/icons/es/icons/legacy";
 
 const states = {
     category: "category",
@@ -135,7 +134,7 @@ function Layout({children}: LayoutProps) {
                                 {g.options.map(o =>
                                     <LinkItem key={o.id} href={`${productPageUrl}${afterClickQuery(o)}`}>
                                         {o.key}
-                                        {isActive(o)? <CheckSquare className="ml-2 text-3xl" fill="green"/> : <CheckSquare className="ml-2 text-3xl" fill="gray"/>}
+                                        {isActive(o)? <Check className="ml-2 text-3xl" fill="green"/> : <Check className="ml-2 text-3xl" fill="gray"/>}
                                     </LinkItem>
                                 )}
                             </Nav.Menu>)}
