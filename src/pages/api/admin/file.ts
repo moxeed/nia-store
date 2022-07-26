@@ -15,18 +15,24 @@ export default async function handler(
 ) {
     const form = new IncomingForm()
 
-    form.parse(req, (err, fields, files: Files) => {
-        if (err) {
-            res.status(400).json({err})
-            return
-        }
+    await new Promise((resolve, reject) => {
+        form.parse(req, (err, fields, files: Files) => {
+            if (err) {
+                res.status(400).json({err})
+                reject(err)
+            }
 
-        const id = randomUUID()
-        const file = Array.isArray(files.file) ? files.file[0] : files.file
-        const extension = file.originalFilename?.split('.').pop()
-        const newFilename = id + '.' + extension;
+            const id = randomUUID()
+            const file = Array.isArray(files.file) ? files.file[0] : files.file
+            const extension = file.originalFilename?.split('.').pop()
+            const newFilename = id + '.' + extension;
 
-        fs.copyFile(file.filepath, `./public/files/${newFilename}`)
-        res.status(200).json({newFilename, fileKey: newFilename, url:"/"+newFilename})
+            fs.copyFile(file.filepath, `./public/files/${newFilename}`)
+                .then(() => {
+                    const result = {newFilename, fileKey: newFilename, url: "/" + newFilename}
+                    res.status(200).json(result)
+                    resolve(result)
+                }).catch(console.log)
+        })
     })
 }
