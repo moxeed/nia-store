@@ -3,7 +3,6 @@ import {normalizeIndex, Product} from "../../../product/entities/product";
 import {getRepository} from "../../../database/datasource";
 import {FindOptionsWhere, Like, Raw} from "typeorm";
 
-
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<any>
@@ -11,13 +10,11 @@ export default async function handler(
     const {filters, search} = req.query
     const normalFilters = normalizeIndex(filters as string)
     const repository = await getRepository(Product)
-
+    
     const where: FindOptionsWhere<Product> = {
         name: search ? Like(`%${search}%`) : undefined,
         optionsIndex: filters ? Raw(a => `${a} SIMILAR TO '${normalFilters}'`) : undefined
     }
-
-    console.log(where)
 
     const products = await repository.find({
         select: {

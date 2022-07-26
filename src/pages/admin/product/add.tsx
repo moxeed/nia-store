@@ -3,7 +3,7 @@ import {ProductEditor} from "../../../product/components/product-editor";
 import Layout from "../../layout";
 
 const AddProduct: NextPage = () => {
-    return <Layout areaScope="/admin">
+    return <Layout areaScope="/admin/">
         <ProductEditor/>
     </Layout>
 }

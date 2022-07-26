@@ -7,7 +7,7 @@ const ProductPage: NextPage = () => {
     const router = useRouter()
     const {id} = router.query
     
-    return <Layout areaScope="/admin">
+    return <Layout areaScope="/admin/">
         <FeaturedEditor id={parseInt(id as string)}/>
     </Layout>
 }

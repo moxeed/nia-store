@@ -23,7 +23,7 @@ const OptionComponent = ({options}: { options: Array<Option> }) => {
         {groupedOptions.map(g =>
             <Row className="px-7">
                 <p className="py-1">{g.label.value}</p>
-                {g.options.map(o => <p className="inline-block text-rose-100 bg-rose-500 px-4 py-1 m-1 rounded">{o.key}</p>)}
+                {g.options.map(o => <p className="inline-block theme-color-main px-4 py-1 m-1 rounded">{o.key}</p>)}
             </Row>
         )}
     </>

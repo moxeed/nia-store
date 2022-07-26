@@ -9,7 +9,7 @@ interface Props {
 }
 
 const EditProduct: NextPage<Props> = ({product}) => {
-    return <Layout areaScope="/admin">
+    return <Layout areaScope="/admin/">
         <ProductEditor product={product}/>
     </Layout>
 }

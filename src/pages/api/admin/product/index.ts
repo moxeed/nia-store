@@ -2,7 +2,7 @@ import type {NextApiRequest, NextApiResponse} from 'next'
 import {normalizeIndex, Product, updateIndex} from "../../../../product/entities/product";
 import {getRepository} from "../../../../database/datasource";
 import {Option} from "../../../../product/entities/option";
-import {Like, Raw} from "typeorm";
+import {FindOptionsWhere, Like, Raw} from "typeorm";
 
 const handlePut = async (
     req: NextApiRequest,
@@ -26,11 +26,18 @@ export default async function handler(
     if (req.method === "PUT")
         return await handlePut(req, res);
 
-    const {filters} = req.query
+    const {filters, search} = req.query
     const normalFilters = normalizeIndex(filters as string)
     const repository = await getRepository(Product)
+    
+    console.log(search)
 
-    const products = filters ? await repository.find({
+    const where: FindOptionsWhere<Product> = {
+        name: search ? Like(`%${search}%`) : undefined,
+        optionsIndex: filters ? Raw(a => `${a} SIMILAR TO '${normalFilters}'`) : undefined
+    }
+
+    const products = await repository.find({
         select: {
             id: true,
             name: true,
@@ -38,18 +45,8 @@ export default async function handler(
             pictures: true,
             options: true,
         },
-        where: {
-            optionsIndex: Raw(a => `${a} SIMILAR TO '${normalFilters}'`)
-        }
-    }) : await repository.find({
-        select: {
-            id: true,
-            name: true,
-            price: true,
-            pictures: true,
-            options: true,
-        }
-    });
+        where
+    })
 
     const productBriefs = products.map(p => ({...p, file: p.pictures[0]?.file}))
     res.status(200).json(productBriefs);

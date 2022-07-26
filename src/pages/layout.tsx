@@ -1,11 +1,10 @@
-import {Content, Drawer, Footer, Header, Input, Nav, Sidenav} from 'rsuite';
-import {LayoutProps} from "next/dist/lib/app-layout";
+import {Content, Drawer, Footer, Form, Header, Input, InputGroup, Nav, Row, Sidenav, Stack} from 'rsuite';
 import React, {ReactNode, useState} from "react";
 import {Option} from "../product/entities/option";
 import {Label} from "../product/entities/label";
 import {useRouter} from "next/router";
 import Link from "next/link";
-import {Check} from "@rsuite/icons";
+import {Check, Search,} from "@rsuite/icons";
 import {Query} from "../common/query";
 import {useApi} from "../common/safe-fetch";
 
@@ -37,14 +36,16 @@ const LinkItem = ({href, children, onClick}: { href: string, children: ReactNode
         </Link>
     </Nav.Item>
 
-function Layout({children, areaScope}: { children: any, areaScope: "/admin" | "/" }) {
+function Layout({children, areaScope}: { children: any, areaScope: "/admin/" | "/" }) {
     const router = useRouter()
 
     const [active, setActive] = useState('home')
-    const [search, setSearch] = useState()
+    const [search, setSearch] = useState<string>()
     const [options, setOptions] = useState(new Array<Option>())
     const [majorOptions, setMajorOptions] = useState(new Array<Option>())
     const {filters}: { filters?: string } = router.query
+    
+    const currentQuery = {filters, search}
 
     const groupedOptions = groupByLabel(options)
     const groupedMajorOptions = groupByLabel(majorOptions)
@@ -59,7 +60,7 @@ function Layout({children, areaScope}: { children: any, areaScope: "/admin" | "/
         const newFilters = filters?.split("-") ?? []
 
         if (isActive(option)) {
-            return Query({
+            return Query({...currentQuery,
                 filters: newFilters
                     .filter(a => a !== key)
                     .join("-")
@@ -67,23 +68,34 @@ function Layout({children, areaScope}: { children: any, areaScope: "/admin" | "/
         }
 
         newFilters.push(key)
-        return Query({filters: newFilters.join("-")})
+        return Query({...currentQuery, filters: newFilters.join("-")})
     }
 
     useApi({
-        url: "/api/option" + Query({filters}),
+        url: "/api/option" + Query(currentQuery),
         callback: setOptions
-    }, [filters])
+    }, [filters, search])
 
     useApi({
         url: "/api/option?major=true",
         callback: setMajorOptions
-    }, [filters])
+    }, [filters, search])
+    
+    const handleSearch = () => {
+        console.log(areaScope)
+        router.push(`${areaScope}product` + Query(currentQuery))
+    }
 
     return (
         <>
             <Header className="m-1">
-                <Input className="px-5 py-3 bg-white" placeholder="جستجو.."/>
+                <Form onSubmit={handleSearch}>
+                    <InputGroup>
+                        <Input className="px-5 py-3 bg-white w-80" placeholder="جستجو.." value={search}
+                               onChange={setSearch}/>
+                        <InputGroup.Button onClick={handleSearch} className="border-2"><Search/></InputGroup.Button>
+                    </InputGroup>
+                </Form>
             </Header>
             <Content className="overflow-y-scroll overflow-x-hidden">
                 {children}
@@ -107,7 +119,7 @@ function Layout({children, areaScope}: { children: any, areaScope: "/admin" | "/
                         <Nav>
                             {groupedMajorOptions.map(g => <Nav.Menu key={g.label.id} title={g.label.value}>
                                 {g.options.map(o =>
-                                    <LinkItem key={o.id} href={`${areaScope}/product/${afterClickQuery(o)}`}>
+                                    <LinkItem key={o.id} href={`${areaScope}product/${afterClickQuery(o)}`}>
                                         {o.key}
                                     </LinkItem>
                                 )}
@@ -126,13 +138,13 @@ function Layout({children, areaScope}: { children: any, areaScope: "/admin" | "/
                     <Sidenav>
                         <Nav>
                             {filters &&
-                                <LinkItem href={`${areaScope}/product`}>
+                                <LinkItem href={`${areaScope}product`}>
                                     حذف فیلتر ها
                                 </LinkItem>
                             }
                             {groupedOptions.map(g => <Nav.Menu key={g.label.id} title={g.label.value}>
                                 {g.options.map(o =>
-                                    <LinkItem key={o.id} href={`${areaScope}/product/${afterClickQuery(o)}`}>
+                                    <LinkItem key={o.id} href={`${areaScope}product/${afterClickQuery(o)}`}>
                                         {o.key}
                                         {isActive(o) ? <Check className="ml-2 text-3xl" fill="green"/> :
                                             <Check className="ml-2 text-3xl" fill="gray"/>}

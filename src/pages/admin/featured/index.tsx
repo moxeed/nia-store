@@ -13,7 +13,7 @@ const ProductPage: NextPage = () => {
         callback: setFeaturedOptions
     }, [])
 
-    return <Layout areaScope="/admin">
+    return <Layout areaScope="/admin/">
         {featuredOptions?.map(p => <Link key={p.id} href={"/admin/featured/" + p.id}>
             <a>
                 <p>{p.option.label.value} - {p.option.key} </p>
