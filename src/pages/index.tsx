@@ -14,7 +14,7 @@ const Home: NextPage<Props> = ({featuredOptions}: Props) => {
     return (
         <Layout areaScope="/">
             {featuredOptions.map(f =>
-                <Link href={`/product?filters=${f.option.label.id}:${f.option.id}`}
+                <Link key={f.id} href={`/product?filters=${f.option.label.id}:${f.option.id}`}
                       className="w-full px-5 py-3">
                     <div className="m-2 rounded-xl bg-white overflow-hidden">
                         <img alt={f.option.key} src={"/files/" + f.image}/>
