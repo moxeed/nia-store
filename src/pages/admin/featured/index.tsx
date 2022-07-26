@@ -17,7 +17,7 @@ const ProductPage: NextPage = () => {
         {featuredOptions?.map(p => <Link key={p.id} href={"/admin/featured/" + p.id}>
             <a>
                 <p>{p.option.label.value} - {p.option.key} </p>
-                <img alt={p.option.key} src={"/files/"+p.image}/>
+                <img alt={p.option.key} src={"/api/file/"+p.image}/>
             </a>
         </Link>)}
     </Layout>

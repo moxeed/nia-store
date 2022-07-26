@@ -9,7 +9,7 @@ export const ImagePicker = (props: { pictures: Array<Picture>, setPictures: (p: 
     const fileList = pictures?.map(p => ({
         fileKey: p.file,
         name: p.file,
-        url: "/files/" + p.file,
+        url: "/api/file/" + p.file,
     }))
 
     const handleSuccess = (response: { fileKey: string }) => {

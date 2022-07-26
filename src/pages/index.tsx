@@ -17,7 +17,7 @@ const Home: NextPage<Props> = ({featuredOptions}: Props) => {
                 <Link key={f.id} href={`/product?filters=${f.option.label.id}:${f.option.id}`}
                       className="w-full px-5 py-3">
                     <div className="m-2 rounded-xl bg-white overflow-hidden">
-                        <img alt={f.option.key} src={"/files/" + f.image}/>
+                        <img alt={f.option.key} src={"/api/file/" + f.image}/>
                         <p className="text-center text-sm p-2">
                             مشاهده محصولات {f.option.key}
                         </p>

@@ -12,7 +12,7 @@ export const ProductCard = (props: { product: ProductBrief, baseUrl: string }) =
     return <Link href={`${baseUrl}/${product.id}`}>
         <Row className="m-2 bg-white rounded-xl overflow-hidden">
             <Col className="p-0" xs={10}>
-                <img alt={product.name} src={"/files/" + product.file}></img>
+                <img alt={product.name} src={"/api/file/" + product.file}></img>
             </Col>
             <Col className="pr-5 my-4 border-r">
                 <Row className="text-lg mb-2">{product.name}</Row>

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {FeaturedOption} from "../../entities/featuredOption";
-import {safeFetch, useApi} from "../../../common/safe-fetch";
+import {safeFetch} from "../../../common/safe-fetch";
 import {ImagePicker} from "../image-picker";
 import {Picture} from "../../entities/product";
 import {OptionsPicker} from "../options-picker";

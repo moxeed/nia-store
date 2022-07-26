@@ -27,7 +27,7 @@ export default async function handler(
             const extension = file.originalFilename?.split('.').pop()
             const newFilename = id + '.' + extension;
 
-            fs.copyFile(file.filepath, `./public/files/${newFilename}`)
+            fs.copyFile(file.filepath, `./storage/${newFilename}`)
                 .then(() => {
                     const result = {newFilename, fileKey: newFilename, url: "/" + newFilename}
                     res.status(200).json(result)
