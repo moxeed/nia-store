@@ -1,16 +1,16 @@
 import 'reflect-metadata'
 import { DataSource, EntityTarget, ObjectLiteral, Repository } from "typeorm";
 import { Label } from '../product/entities/label';
-import {Picture, Product, Specification} from '../product/entities/product';
+import { Picture, Product, Specification } from '../product/entities/product';
 import { Option } from '../product/entities/option';
-import {FeaturedOption} from "../product/entities/featuredOption";
+import { FeaturedOption } from "../product/entities/featuredOption";
 
 const AppDataSource = new DataSource({
     type: "postgres",
-    host: "94.101.187.218",
+    host: "postgres-service",
     port: 5432,
     username: "postgres",
-    password: "mysecretpassword",
+    password: "1qaz@WSX",
     database: "nia_store",
     //synchronize: true,
     //logging: true,
