@@ -7,12 +7,12 @@ import { FeaturedOption } from "../product/entities/featuredOption";
 
 const AppDataSource = new DataSource({
     type: "postgres",
-    host: "postgres-service",
-    port: 5432,
+    host: process.env.DB_Address,
+    port: parseInt(process.env.DB_Port ?? "5432"),
     username: "postgres",
     password: "1qaz@WSX",
     database: "nia_store",
-    //synchronize: true,
+    synchronize: process.env.DB_Address == "true",
     //logging: true,
     entities: [Product, Option, Label, Picture, Specification, FeaturedOption],
 })

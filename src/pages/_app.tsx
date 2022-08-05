@@ -10,7 +10,7 @@ function MyApp({Component, pageProps}: AppProps) {
             <Head>
                 <title>{"نیاکالا | فروشگاه آنلاین لوازم خانگی"}</title>
             </Head>
-            <Container dir="rtl" className="h-full bg-gray-100">
+            <Container dir="rtl" className="h-full bg-gray-200">
                 <Component {...pageProps} />
             </Container>
         </>

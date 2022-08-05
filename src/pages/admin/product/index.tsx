@@ -20,6 +20,11 @@ const ProductPage: NextPage = () => {
     }, [filters, search])
 
     return <Layout areaScope="/admin/">
+        <Link href="/admin/product/add">
+            <Button>
+                افزودن محصول
+            </Button>
+        </Link>
         {(products?.length === 0) && <div className="bg-white m-2 p-5 rounded-xl">
             <p className="p-4 text-red-600 text-center">نتیجه ای پیدا نشد</p>
             <Link href="admin/product">

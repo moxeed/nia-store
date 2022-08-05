@@ -48,7 +48,7 @@ export const FeaturedEditor = ({id}: { id?: number }) => {
     }
     
 
-    return <Panel>
+    return <Panel className="bg-white">
         <ImagePicker pictures={pictures} setPictures={handlePictureUpdate}/>
         <OptionsPicker tags={tags} setTags={handleOptionUpdate}/>
         <Button onClick={handleSubmit}>ثبت</Button>

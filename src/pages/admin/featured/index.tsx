@@ -14,12 +14,16 @@ const ProductPage: NextPage = () => {
     }, [])
 
     return <Layout areaScope="/admin/">
-        {featuredOptions?.map(p => <Link key={p.id} href={"/admin/featured/" + p.id}>
-            <a>
-                <p>{p.option.label.value} - {p.option.key} </p>
-                <img alt={p.option.key} src={"/api/file/"+p.image}/>
-            </a>
-        </Link>)}
+        {featuredOptions?.map(p =>
+            <div key={p.id} className="bg-white text-center p-2 m-2">
+                <Link key={p.id} href={"/admin/featured/" + p.id}>
+                    <a>
+                        <img alt={p.option.key} src={"/api/file/" + p.image}/>
+                        <p>{p.option.label.value} - {p.option.key} </p>
+                    </a>
+                </Link>
+            </div>
+        )}
     </Layout>
 }
 
