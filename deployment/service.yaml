@@ -1,3 +1,33 @@
+apiVersion: v1
+kind: PersistentVolume # Create PV
+metadata:
+  name: nia-store-volume # Sets PV name
+  labels:
+    type: local # Sets PV's type
+    app: nia-store
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 1Gi # Sets PV's size
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/data/nia-store" # Sets PV's host path
+---
+apiVersion: v1
+kind: PersistentVolumeClaim # Create PVC
+metadata:
+  name: nia-store-storage-claim # Sets PVC's name
+  labels:
+    app: nia-store # Defines app to create PVC for
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi # Sets PVC's size
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,14 +44,23 @@ spec:
       labels:
         app: nia-store
     spec:
+      securityContext:
+        fsGroup: 1001
+        runAsUser: 1001
+        runAsGroup: 1001
       containers:
       - name: nia-store
-        image: ghcr.io/moxeed/nia-store:v0.0.6
+        image: ghcr.io/moxeed/nia-store:v0.0.8
         ports:
         - containerPort: 3000
-
+        volumeMounts:
+          - mountPath: /app/storage
+            name: nia-store-storage
+      volumes:
+        - name: nia-store-storage
+          persistentVolumeClaim:
+            claimName: nia-store-storage-claim
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
