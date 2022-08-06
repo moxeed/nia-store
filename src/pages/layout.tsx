@@ -126,7 +126,7 @@ function Layout({children, areaScope}: { children: any, areaScope: "/admin/" | "
                         <IconButton className="bg-green-500 mx-5" icon={<Whatsapp color="white"/>} circle
                                     size="md"/>
                     </Link>
-                    <Link href="https://instagram.com/hasannia.home.appliances">
+                    <Link href="https://instagram.com/hasannia.niakala">
                         <IconButton className="bg-pink-600 mx-5" icon={<Instagram color="white"/>} circle
                                     size="md"/>
                     </Link>

@@ -33,3 +33,9 @@ yarn-error.log*
 *.tsbuildinfo
 
 .idea
+/storage/a2bf00da-3279-4eee-9155-07c6c345ed6e.jpg
+/storage/d994a061-154e-4953-bd95-fa1d7fb54a42.png
+/storage/de124437-f31b-44a1-abc1-0141097e45e4.jpg
+/storage/f41d8d7b-9ad1-42a2-a9e0-284b315c71ab.jpg
+/storage/f08784ed-6d8f-4fb6-b0f8-935ca40313b4.jpg
+/deployment/postgres.yaml
