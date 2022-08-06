@@ -3,15 +3,20 @@ import type {AppProps} from "next/app"
 import {Container} from "rsuite"
 import React from "react"
 import Head from "next/head"
+import {CustomContext} from "rsuite/CustomProvider";
 
 function MyApp({Component, pageProps}: AppProps) {
     return (
         <>
+
             <Head>
+
                 <title>{"نیاکالا | فروشگاه آنلاین لوازم خانگی"}</title>
             </Head>
             <Container dir="rtl" className="h-full bg-gray-200">
-                <Component {...pageProps} />
+                <CustomContext.Provider value={{rtl: true}}>
+                    <Component {...pageProps} />
+                </CustomContext.Provider>
             </Container>
         </>
     );

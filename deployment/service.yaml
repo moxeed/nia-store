@@ -44,13 +44,9 @@ spec:
       labels:
         app: nia-store
     spec:
-      securityContext:
-        fsGroup: 1001
-        runAsUser: 1001
-        runAsGroup: 1001
       containers:
       - name: nia-store
-        image: ghcr.io/moxeed/nia-store:v0.0.8
+        image: ghcr.io/moxeed/nia-store:v0.0.9
         ports:
         - containerPort: 3000
         volumeMounts:

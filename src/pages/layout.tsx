@@ -119,14 +119,14 @@ function Layout({children, areaScope}: { children: any, areaScope: "/admin/" | "
             </Content>
             <Footer className="text-center bg-white rounded-xl mb-2 mx-2">
                 <div className="m-2">
-                    <Link href="tel:0989124097690">
+                    <Link href="tel:09124097690">
                         <IconButton className="bg-blue-500 mx-5" icon={<Phone color="white"/>} circle size="md"/>
                     </Link>
                     <Link href="https://wa.me/0989124097690">
                         <IconButton className="bg-green-500 mx-5" icon={<Whatsapp color="white"/>} circle
                                     size="md"/>
                     </Link>
-                    <Link href="https://www.instagram.com/hasannia.home.appliances/">
+                    <Link href="https://instagram.com/hasannia.home.appliances">
                         <IconButton className="bg-pink-600 mx-5" icon={<Instagram color="white"/>} circle
                                     size="md"/>
                     </Link>

@@ -5,21 +5,16 @@ import {safeFetch} from "../common/safe-fetch";
 import {getHost} from "../common/host";
 import Link from "next/link";
 import {Carousel, Col, CustomProvider, Row} from "rsuite";
+import {CustomContext} from "rsuite/CustomProvider";
 
 interface Props {
     featuredOptions: Array<FeaturedOption>
 }
 
-const modes: { [key: number]: string } = {
-    1: "single",
-    2: "duplicate",
-    3: "many"
-}
-
 const FeaturedItem = ({featuredItem, description = false}: { featuredItem: FeaturedOption, description?: boolean }) => {
     return <Link key={featuredItem.id}
                  href={`/product?filters=${featuredItem.option.label.id}:${featuredItem.option.id}`}>
-        <div>
+        <div className="px-2">
             <div className="my-2 rounded-xl bg-white overflow-hidden">
                 <img alt={featuredItem.option.key} src={"/api/file/" + featuredItem.image}/>
             </div>
@@ -31,48 +26,25 @@ const FeaturedItem = ({featuredItem, description = false}: { featuredItem: Featu
 }
 
 const FeaturedSection = ({featuredOptions}: Props) => {
-    const mode = modes[featuredOptions.length]
+    const odd = featuredOptions.length % 2 !== 0
+    const first = odd ? featuredOptions[0] : undefined
+    const items = odd ? featuredOptions.slice(1) : featuredOptions
 
-    if (mode == "single") {
-        return <>
-            {featuredOptions.map(f => <FeaturedItem key={f.id} featuredItem={f}/>)}
-        </>
-    }
-
-    if (mode == "duplicate") {
-        return <>
-            <Row>
-                {featuredOptions.map(f => <Col xs={12} key={f.id}>
-                    <FeaturedItem featuredItem={f}/>
-                </Col>)}
-            </Row>
-        </>
-    }
-
-    const top = featuredOptions.slice(0, 2)
-    const others = featuredOptions.slice(2)
-
-    return <>
-        <Row>
-            {top.map(f => <Col xs={12} key={f.id}>
-                <FeaturedItem featuredItem={f}/>
-            </Col>)}
-        </Row>
-        <Row className="overflow-scroll">
-            {others.map(f => <Col xs={8} key={f.id}>
+    return <div>
+        {first && <FeaturedItem featuredItem={first} />}
+        {items.map(f => <div key={f.id} className="w-1/2 inline-block">
                 <FeaturedItem featuredItem={f} description={true}/>
-            </Col>)}
-        </Row>
-    </>
+            </div>
+        )}
+    </div>
 }
 
 const Home: NextPage<Props> = ({featuredOptions}: Props) => {
     return (
         <Layout areaScope="/">
             <div className="bg-white m-2 rounded-xl overflow-hidden p-1">
-                <FeaturedSection featuredOptions={[...featuredOptions, ...featuredOptions, ...featuredOptions]}/>
+                <FeaturedSection featuredOptions={featuredOptions}/>
             </div>
-            {/*<CustomProvider rtl={true}>*/}
             <Carousel style={{height: "50vw"}} autoplay={true} className="m-2 rounded-xl bg-white overflow-hidden">
                 <img src="/car1.jpg"/>
                 <img src="/car2.jpg"/>
@@ -80,7 +52,6 @@ const Home: NextPage<Props> = ({featuredOptions}: Props) => {
                 <img src="/car4.jpg"/>
                 <img src="/car5.jpg"/>
             </Carousel>
-            {/*</CustomProvider>*/}
         </Layout>
     )
 }
