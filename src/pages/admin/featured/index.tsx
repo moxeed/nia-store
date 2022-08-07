@@ -3,7 +3,7 @@ import {useState} from "react";
 import {useApi} from "../../../common/safe-fetch";
 import {FeaturedOption} from "../../../product/entities/featuredOption";
 import Link from "next/link";
-import Layout from "../../layout";
+import Layout from "../../../common/layout";
 
 const ProductPage: NextPage = () => {
     const [featuredOptions, setFeaturedOptions] = useState(new Array<FeaturedOption>())

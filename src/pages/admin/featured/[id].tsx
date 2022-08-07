@@ -1,7 +1,7 @@
 import {NextPage} from "next";
 import {FeaturedEditor} from "../../../product/components/option/featured-editor";
 import {useRouter} from "next/router";
-import Layout from "../../layout";
+import Layout from "../../../common/layout";
 
 const ProductPage: NextPage = () => {
     const router = useRouter()
