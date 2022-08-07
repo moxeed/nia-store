@@ -4,8 +4,9 @@ import {FeaturedOption} from "../product/entities/featuredOption";
 import {safeFetch} from "../common/safe-fetch";
 import {getHost} from "../common/host";
 import Link from "next/link";
-import {Carousel, Col, CustomProvider, Row} from "rsuite";
-import {CustomContext} from "rsuite/CustomProvider";
+import {Carousel} from "rsuite";
+import {NiaWrapper} from "../common/components/nia-wrapper";
+import QuoteRight from "@rsuite/icons/legacy/QuoteRight";
 
 interface Props {
     featuredOptions: Array<FeaturedOption>
@@ -18,7 +19,7 @@ const FeaturedItem = ({featuredItem, description = false}: { featuredItem: Featu
             <div className="my-2 rounded-xl bg-white overflow-hidden">
                 <img alt={featuredItem.option.key} src={"/api/file/" + featuredItem.image}/>
             </div>
-            {description && <p className="text-center text-xs p-1">
+            {description && <p className="text-center text-xs pb-2">
                 {featuredItem.option.key}
             </p>}
         </div>
@@ -31,7 +32,7 @@ const FeaturedSection = ({featuredOptions}: Props) => {
     const items = odd ? featuredOptions.slice(1) : featuredOptions
 
     return <div>
-        {first && <FeaturedItem featuredItem={first} />}
+        {first && <FeaturedItem featuredItem={first}/>}
         {items.map(f => <div key={f.id} className="w-1/2 inline-block">
                 <FeaturedItem featuredItem={f} description={true}/>
             </div>
@@ -42,16 +43,24 @@ const FeaturedSection = ({featuredOptions}: Props) => {
 const Home: NextPage<Props> = ({featuredOptions}: Props) => {
     return (
         <Layout areaScope="/">
-            <div className="bg-white m-2 rounded-xl overflow-hidden p-1">
-                <FeaturedSection featuredOptions={featuredOptions}/>
-            </div>
-            <Carousel style={{height: "50vw"}} autoplay={true} className="m-2 rounded-xl bg-white overflow-hidden">
-                <img src="/car1.jpg"/>
-                <img src="/car2.jpg"/>
-                <img src="/car3.jpg"/>
-                <img src="/car4.jpg"/>
-                <img src="/car5.jpg"/>
-            </Carousel>
+            <NiaWrapper>
+                <FeaturedSection featuredOptions={[...featuredOptions, ...featuredOptions]}/>
+            </NiaWrapper>
+            <NiaWrapper>
+                <Carousel style={{height: "50vw"}} autoplay={true}>
+                    <img src="/car1.jpg"/>
+                    <img src="/car2.jpg"/>
+                    <img src="/car3.jpg"/>
+                    <img src="/car4.jpg"/>
+                    <img src="/car5.jpg"/>
+                </Carousel>
+            </NiaWrapper>
+            <NiaWrapper className="px-12 pb-2 text-center">
+                <img src="/trusted.png" alt="نماینده برتر برندهای معتبر داخلی"/>
+                <p className="p-2">
+                    <QuoteRight/> کیفیت هرگز از مد نمی افتد
+                </p>
+            </NiaWrapper>
         </Layout>
     )
 }

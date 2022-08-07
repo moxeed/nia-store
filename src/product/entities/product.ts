@@ -114,15 +114,17 @@ export const normalizeIndex = (index?: string) => {
     let result = "%" 
     for (const key of keys){
         const [label, value] = key.split(':')
-        
+        console.log(label, value)
+
         if (label !== last){
             last = label
-            result += label + ':('
-            
             result += result[result.length - 1] == '|' ? '0)%' : ""
+            result += label + ':('
         }
         
         result += value + '|'
+        console.log(result)
+        console.log(last)
     }
     
     return result + "0)%"

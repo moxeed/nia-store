@@ -21,10 +21,11 @@ html {
 
 body, html, #__next {
     height: 100%;
+    background-color: #eee;
 }
 
 .theme-color-main {
-    background-color: rgba(210, 43, 43, 0.85);
-    color: azure;
+    background-color: #01E0C3;
+    color: #111;
     border: none;
 }

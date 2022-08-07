@@ -14,7 +14,7 @@ export const ProductCard = (props: { product: ProductBrief, baseUrl: string }) =
             <Col className="p-0" xs={10}>
                 <img alt={product.name} src={"/api/file/" + product.file}></img>
             </Col>
-            <Col className="pr-5 my-4 border-r">
+            <Col className="pr-5 my-4 border-r" xs={14}>
                 <Row className="text-lg mb-2">{product.name}</Row>
                 <Row>
                     <Price value={product.price}/>

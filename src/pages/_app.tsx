@@ -8,12 +8,11 @@ import {CustomContext} from "rsuite/CustomProvider";
 function MyApp({Component, pageProps}: AppProps) {
     return (
         <>
-
             <Head>
 
                 <title>{"نیاکالا | فروشگاه آنلاین لوازم خانگی"}</title>
             </Head>
-            <Container dir="rtl" className="h-full bg-gray-200">
+            <Container dir="rtl" className="h-full">
                 <CustomContext.Provider value={{rtl: true}}>
                     <Component {...pageProps} />
                 </CustomContext.Provider>
