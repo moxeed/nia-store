@@ -1,27 +1,28 @@
 import {
     Button,
-    Checkbox,
+    Checkbox, Col, Container,
     Content,
     Footer,
     Form,
     Header, IconButton,
     Input,
-    InputGroup,
-    Nav,
+    InputGroup, Loader,
+    Nav, Row,
     Sidenav,
 } from 'rsuite';
-import React, {ReactNode, useState} from "react";
+import React, {createContext, ReactNode, useContext, useEffect, useState} from "react";
 import {Option} from "../../product/entities/option";
 import {Label} from "../../product/entities/label";
 import {useRouter} from "next/router";
 import Link from "next/link";
-import {Location, Phone, Search,} from "@rsuite/icons";
+import {ArrowRight, Location, Phone, Search,} from "@rsuite/icons";
 import {Query} from "../query";
 import {useApi} from "../safe-fetch";
 import Whatsapp from "@rsuite/icons/legacy/Whatsapp";
 import Instagram from "@rsuite/icons/legacy/Instagram";
 import {ArrowCircleORight} from "@rsuite/icons/lib/icons/legacy";
 import CaretDown from "@rsuite/icons/legacy/CaretDown";
+import {NiaWrapper} from "./nia-wrapper";
 
 const states = {
     category: "category",
@@ -29,6 +30,11 @@ const states = {
     menu: "menu"
 }
 
+export const LoadingContext = createContext<{ loading: boolean, setLoading: (newState: boolean) => void }>({
+    loading: false,
+    setLoading: () => {
+    }
+})
 
 const groupByLabel = (options: Array<Option>): Array<{ label: Label, options: Array<Option> }> => {
     const grouped = new Map<number, { label: Label, options: Array<Option> }>();
@@ -43,7 +49,7 @@ const groupByLabel = (options: Array<Option>): Array<{ label: Label, options: Ar
 }
 
 const LinkItem = ({href, children, onClick}: { href: string, children: ReactNode, onClick?: () => void }) =>
-    <div className="mx-4 p-2">
+    <div className="mx-4 p-2 border-b">
         <Link href={href}>
             <div onClick={onClick} className="block w-full h-full text-sm">
                 {children}
@@ -56,8 +62,11 @@ const ActionBox = ({
                        areaScope,
                        filters,
                        search,
-                       setState
-                   }: { state: string, areaScope: string, filters?: string, search?: string, setState: (state: string) => void }) => {
+                       setState,
+                       children
+                   }: { state: string, areaScope: string, filters?: string, search?: string, children: ReactNode, setState: (state: string) => void }) => {
+
+    const {loading} = useContext(LoadingContext)
     const [options, setOptions] = useState(new Array<Option>())
     const [majorOptions, setMajorOptions] = useState(new Array<Option>())
 
@@ -72,6 +81,7 @@ const ActionBox = ({
         url: "/api/option?major=true",
         callback: setMajorOptions
     }, [filters])
+
 
     const groupedOptions = groupByLabel(options)
     const groupedMajorOptions = groupByLabel(majorOptions)
@@ -104,54 +114,88 @@ const ActionBox = ({
         return Query({...currentQuery, filters: newFilters.join("-")})
     }
 
-    return <div style={{height: state !== states.home ? "Calc(100vh - 175px)" : "0px"}} className="transition-all overflow-hidden">
-        <div className="p-2">
-            <Button className="bg-gray-200 w-full" onClick={() => setState(states.home)}><CaretDown className="text-xl"/></Button>
+    return <>
+        <div style={loading ? {visibility: "visible", opacity: 1} : {visibility: "hidden", opacity: 0}}
+             className="fixed transition-all w-full h-full bottom-0 top-0 left-0 right-0 z-20 bg-white grid place-items-center">
+            <img src="/logo1.jpg" alt="نیا کالا" width="100"/>
+            <Loader size="lg"/>
         </div>
-        {(state === states.category) && <Sidenav color="red">
-            <Nav className="bg-white">
-                {groupedMajorOptions.map(g => <Nav.Menu open eventKey={g.label.id} key={g.label.id}
-                                                        title={g.label.value} noCaret>
-                    {g.options.map(o =>
-                        <LinkItem key={o.id} href={`${areaScope}product/${afterPurgeClickQuery(o)}`}
-                                  onClick={() => setState("")}>
-                            <ArrowCircleORight color="green" className="mx-2 my-2 text-xl"/> {o.key}
-                        </LinkItem>
-                    )}
-                </Nav.Menu>)}
-            </Nav>
-        </Sidenav>}
-        {(state === states.menu) && <div>
-            <Sidenav>
-                <Nav className="bg-white h-full">
-                    {filters && <div className="bg-red-400 text-white m-2 rounded-xl">
-                        <LinkItem href={`${areaScope}product`}>
-                            حذف فیلتر ها
-                        </LinkItem>
-                    </div>
-                    }
-                    {groupedOptions.map(g => <Nav.Menu key={g.label.id} title={g.label.value}>
-                        {g.options.map(o =>
-                            <LinkItem key={o.id} href={`${areaScope}product/${afterClickQuery(o)}`}>
-                                <Checkbox checked={isActive(o)}/>
-                                {o.key}
-                            </LinkItem>
-                        )}
-                    </Nav.Menu>)}
-                </Nav>
+        <NiaWrapper style={{height: state !== states.home ? "100%" : "0"}}
+                    className="transition-all bg-white text-center my-0">
+            {(state === states.category) && <Sidenav className="h-full bg-white">
+                <Container className="h-full">
+                    <Header>
+                        <div className="p-2">
+                            <Button className="bg-gray-200 w-full" onClick={() => setState(states.home)}><CaretDown
+                                className="text-xl"/></Button>
+                        </div>
+                    </Header>
+                    <Content className="overflow-scroll">
+                        <Nav className="bg-white">
+                            {groupedMajorOptions.map(g => <Nav.Menu open eventKey={g.label.id} key={g.label.id}
+                                                                    title={g.label.value} noCaret>
+                                {g.options.map(o =>
+                                    <LinkItem key={o.id} href={`${areaScope}product/${afterPurgeClickQuery(o)}`}
+                                              onClick={() => setState("")}>
+                                        <ArrowRight color="gray" className="mx-2 my-2 text-xl"/> {o.key}
+                                    </LinkItem>
+                                )}
+                            </Nav.Menu>)}
+                        </Nav>
+                    </Content>
+                </Container>
             </Sidenav>
-            {(filters !== undefined) && <div className="p-2">
-                <Button className="w-full rounded-xl bg-emerald-400 text-white" appearance="subtle"
-                        onClick={() => setState("")}>مشاهده
-                    محصولات فیلتر شده</Button>
-            </div>}
-        </div>}
-    </div>
+            }
+            {(state === states.menu) && <Container className="h-full">
+                <Header>
+                    <div className="p-2">
+                        <Button className="bg-gray-200 w-full" onClick={() => setState(states.home)}><CaretDown
+                            className="text-xl"/></Button>
+                    </div>
+                </Header>
+                <Content className="overflow-scroll">
+                    <Sidenav>
+                        <Nav className="bg-white h-full">
+                            {groupedOptions.map(g => <Nav.Menu key={g.label.id} title={g.label.value}>
+                                {g.options.map(o =>
+                                    <LinkItem key={o.id} href={`${areaScope}product/${afterClickQuery(o)}`}>
+                                        <Checkbox checked={isActive(o)}/>
+                                        {o.key}
+                                    </LinkItem>
+                                )}
+                            </Nav.Menu>)}
+                        </Nav>
+                    </Sidenav>
+                </Content>
+                <Footer>
+                    <Row>
+                        <Col xs={12} className="p-2 pr-5">
+                            {(filters !== undefined) &&
+                                <div
+                                    className="w-full rounded-xl p-2 bg-emerald-500 text-white border-2 border-emerald-500"
+                                    onClick={() => setState("")}>
+                                    اعمال فیلتر</div>}
+                        </Col>
+                        <Col xs={12} className="p-2 pl-5">
+                            {(filters !== undefined) && <Link href={`${areaScope}product`}>
+                                <div className="w-full rounded-xl border-2 p-2 border-red-500 text-red-500"
+                                     onClick={() => setState("")}>
+                                    حذف فیلتر
+                                </div>
+                            </Link>
+                            }
+                        </Col>
+                    </Row>
+                </Footer>
+            </Container>}
+        </NiaWrapper>
+        {state === states.home && children}
+    </>
 }
 
 function Layout({children, areaScope}: { children: any, areaScope: "/admin/" | "/" }) {
     const router = useRouter()
-
+    const [loading, setLoading] = useState(false)
     const [active, setActive] = useState(states.home)
     const [search, setSearch] = useState<string>()
 
@@ -165,8 +209,7 @@ function Layout({children, areaScope}: { children: any, areaScope: "/admin/" | "
 
     return (
         <>
-            <Header className="mx-1">
-
+            <Header className="mx-1 m-1">
                 <Form onSubmit={handleSearch}>
                     <InputGroup>
                         <Input className="px-5 py-3 bg-white w-80" placeholder="جستجو.." value={search}
@@ -177,10 +220,15 @@ function Layout({children, areaScope}: { children: any, areaScope: "/admin/" | "
                 </Form>
             </Header>
             <Content className="overflow-y-scroll overflow-x-hidden">
-                {children}
+                <LoadingContext.Provider value={{loading, setLoading}}>
+                    <ActionBox state={active} areaScope={areaScope} filters={filters} search={currentSearch}
+                               setState={setActive}>
+                        {children}
+                    </ActionBox>
+                </LoadingContext.Provider>
             </Content>
-            <Footer className="text-center bg-white rounded-xl m-2">
-                <div className="m-2">
+            <Footer className="text-center bg-white rounded-xl overflow-hidden m-2">
+                {active === states.home && <div className="m-2">
                     <Link href="tel:09124097690">
                         <IconButton className="bg-blue-500 mx-5" icon={<Phone color="white"/>} circle size="md"/>
                     </Link>
@@ -196,8 +244,7 @@ function Layout({children, areaScope}: { children: any, areaScope: "/admin/" | "
                         <IconButton className="bg-orange-500 text-white mx-5" icon={<Location color="white"/>}
                                     circle size="md"/>
                     </Link>
-                </div>
-                <ActionBox state={active} areaScope={areaScope} filters={filters} search={currentSearch} setState={setActive}/>
+                </div>}
                 <Nav reversed appearance="subtle"
                      onSelect={setActive}
                      justified>

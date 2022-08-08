@@ -9,8 +9,8 @@ function MyApp({Component, pageProps}: AppProps) {
     return (
         <>
             <Head>
-
                 <title>{"نیاکالا | فروشگاه آنلاین لوازم خانگی"}</title>
+                <meta name="mobile-web-app-capable" content="yes"/>
             </Head>
             <Container dir="rtl" className="h-full">
                 <CustomContext.Provider value={{rtl: true}}>

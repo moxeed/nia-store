@@ -1,4 +1,5 @@
-﻿import {useEffect} from "react";
+﻿import {useContext, useEffect} from "react";
+import {LoadingContext} from "./components/layout";
 
 export const safeFetch = (url: string, body?: any): [Promise<any>, () => void] => {
     let active = true
@@ -29,9 +30,17 @@ export const useApi = ({
                            body,
                            callback
                        }: { url: string, body?: any, callback: (res: any) => void }, deps: Array<any>) => {
+    const {setLoading} = useContext(LoadingContext)
+
+    const handleCallback = (res:any) => {
+        setTimeout(() => setLoading(false), 50)
+        callback(res)
+    }
+
     return useEffect(() => {
+        setLoading(true)
         const [result, cancel] = safeFetch(url, body)
-        result.then(callback)
+        result.then(handleCallback)
         return cancel
     }, deps)
 }

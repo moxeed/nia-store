@@ -44,7 +44,7 @@ const Home: NextPage<Props> = ({featuredOptions}: Props) => {
     return (
         <Layout areaScope="/">
             <NiaWrapper>
-                <FeaturedSection featuredOptions={[...featuredOptions, ...featuredOptions]}/>
+                <FeaturedSection featuredOptions={featuredOptions}/>
             </NiaWrapper>
             <NiaWrapper>
                 <Carousel style={{height: "50vw"}} autoplay={true}>

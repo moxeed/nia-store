@@ -50,7 +50,11 @@ export const ProductDetail = ({product}: { product: Product }) => {
     return <>
         <div className="bg-white m-1 rounded-lg overflow-hidden">
             <Carousel shape="bar" placement="bottom">
-                {product.pictures?.map(p => <img alt={product.name} src={"/api/file/" + p.file}/>)}
+                {product.pictures?.map(p =>
+                    <div key={p.id}>
+                        <img alt={product.name} src={"/api/file/" + p.file}/>
+                    </div>
+                )}
             </Carousel>
             <div className="px-6 py-2">
                 <p className="text-xl">{product.name}</p>
