@@ -11,13 +11,13 @@ import {
     Sidenav,
 } from 'rsuite';
 import React, {ReactNode, useState} from "react";
-import {Option} from "../product/entities/option";
-import {Label} from "../product/entities/label";
+import {Option} from "../../product/entities/option";
+import {Label} from "../../product/entities/label";
 import {useRouter} from "next/router";
 import Link from "next/link";
 import {Location, Phone, Search,} from "@rsuite/icons";
-import {Query} from "./query";
-import {useApi} from "./safe-fetch";
+import {Query} from "../query";
+import {useApi} from "../safe-fetch";
 import Whatsapp from "@rsuite/icons/legacy/Whatsapp";
 import Instagram from "@rsuite/icons/legacy/Instagram";
 import {ArrowCircleORight} from "@rsuite/icons/lib/icons/legacy";
@@ -205,7 +205,7 @@ function Layout({children, areaScope}: { children: any, areaScope: "/admin/" | "
                     <Nav.Item className="text-gray-900 p-1" eventKey={states.home}>
                         <Link href={areaScope}>
                             <div className="h-full w-full">
-                                <img className="inline w-1/2" src="/public/logo1.jpeg" alt="نیاکالا"/>
+                                <img className="inline w-1/2" src="/logo1.jpg" alt="نیاکالا"/>
                             </div>
                         </Link>
                     </Nav.Item>

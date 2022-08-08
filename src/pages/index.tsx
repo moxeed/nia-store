@@ -1,5 +1,5 @@
 import type {NextPage} from 'next'
-import Layout from '../common/layout';
+import Layout from '../common/components/layout';
 import {FeaturedOption} from "../product/entities/featuredOption";
 import {safeFetch} from "../common/safe-fetch";
 import {getHost} from "../common/host";

@@ -1,5 +1,5 @@
 import type {NextPage, NextPageContext} from 'next'
-import Layout from "../../common/layout";
+import Layout from "../../common/components/layout";
 import {ProductBrief} from "../../product/models/product-brief";
 import {ProductCard} from "../../product/components/product-card";
 import {getHost} from "../../common/host";

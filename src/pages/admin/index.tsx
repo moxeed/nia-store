@@ -1,5 +1,5 @@
 import type {NextPage} from 'next'
-import Layout from "../../common/layout";
+import Layout from "../../common/components/layout";
 import Link from "next/link";
 import {Button} from "rsuite";
 

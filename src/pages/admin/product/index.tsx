@@ -5,7 +5,7 @@ import {useRouter} from "next/router";
 import {ProductCard} from "../../../product/components/product-card";
 import {Query} from "../../../common/query";
 import {useApi} from "../../../common/safe-fetch";
-import Layout from "../../../common/layout";
+import Layout from "../../../common/components/layout";
 import Link from "next/link";
 import {Button} from "rsuite";
 

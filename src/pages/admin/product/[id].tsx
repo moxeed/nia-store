@@ -2,7 +2,7 @@ import type {NextPage, NextPageContext} from 'next'
 import {Product} from "../../../product/entities/product";
 import {ProductEditor} from "../../../product/components/product-editor";
 import {getHost} from "../../../common/host";
-import Layout from "../../../common/layout";
+import Layout from "../../../common/components/layout";
 
 interface Props {
     product?: Product
