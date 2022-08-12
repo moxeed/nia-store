@@ -12,7 +12,7 @@ export const SpecificationEditor = (props: {
     const addLabel = (label: Label) => {
         specifications.push({
             label: label,
-            key: "-"
+            key: ""
         })
         setSpecifications(specifications)
     }

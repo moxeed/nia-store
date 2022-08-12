@@ -10,6 +10,10 @@ const message = <Message showIcon type="success">
     با موفقیت ثبت شد
 </Message>
 
+const failedMessage = <Message showIcon type="error">
+    داده ورودی اشتباه است
+</Message>
+
 export const ProductEditor = (props: { product?: Product }) => {
     const [product, setProduct] = useState<Product>(props.product ?? new Product());
     const toast = useToaster()
@@ -18,7 +22,15 @@ export const ProductEditor = (props: { product?: Product }) => {
         fetch("/api/admin/product", {
             method: "PUT",
             body: JSON.stringify(product)
-        }).then(() => toast.push(message))
+        })
+            .then((res) => {
+                if (res.ok){
+                toast.push(message)
+                }
+                else{
+                    toast.push(failedMessage)
+                }
+            })
     }
 
     const setTags = (tags: Array<Option>) => setProduct({...product, options: tags});

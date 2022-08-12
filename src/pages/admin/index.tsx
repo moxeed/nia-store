@@ -7,14 +7,18 @@ const Home: NextPage = () => {
     return (
         <Layout areaScope="/">
             <Link href="/admin/product/">
-                <Button appearance="subtle" className="w-full my-2 mx-5 p-4 bg-white">
-                    محصولات
-                </Button>
+                <div className="py-2 px-4">
+                    <Button appearance="subtle" className="w-full p-4 bg-white">
+                        محصولات
+                    </Button>
+                </div>
             </Link>
             <Link href="/admin/featured">
-                <Button appearance="subtle" className="my-2 mx-5 p-4 bg-white">
-                    ایتم های صفحه اصلی
-                </Button>
+                <div className="py-2 px-4">
+                    <Button appearance="subtle" className="w-full p-4 bg-white">
+                        ایتم های صفحه اصلی
+                    </Button>
+                </div>
             </Link>
         </Layout>
     )

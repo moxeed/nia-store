@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react"
-import {AutoComplete, Panel} from "rsuite";
+import {AutoComplete, Button, Panel} from "rsuite";
 import {Label} from "../entities/label";
 import {Option} from "../entities/option";
 import {TagLabelPicker} from "./tag-label-picker";
@@ -23,6 +23,12 @@ export const OptionsPicker = (props: { tags?: Array<Option>, setTags: (tags: Arr
         tags.push(tag)
         setTags(tags)
         setCreate(false);
+        setKey("")
+    }
+
+    const removeAt = (index: number) => {
+        tags.splice(index, 1)
+        setTags(tags)
     }
 
     useEffect(() => {
@@ -52,7 +58,10 @@ export const OptionsPicker = (props: { tags?: Array<Option>, setTags: (tags: Arr
         <div className="pb-2 pt-2">
             <Panel header="موارد انتخابی" bordered>
                 <AutoComplete data={data} onSelect={(_, e) => addTag(e.tag)} onChange={setKey} placement="bottomEnd"/>
-                {tags.map(tag => <p className="pt-2 pr-4">{tag.label.value}:{tag.key}</p>)}
+                {tags.map((tag, index) => <div key={tag.id} className="flex">
+                    <Button appearance="ghost" onClick={() => removeAt(index)}>X</Button>
+                    <p className="pt-2 pr-4">{tag.label.value}:{tag.key}</p>
+                </div>)}
             </Panel>
             <TagLabelPicker open={create} value={key} addTag={addTag} onClose={() => setCreate(false)}/>
         </div>
