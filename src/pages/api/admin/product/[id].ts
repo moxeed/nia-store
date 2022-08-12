@@ -7,10 +7,17 @@ export default async function handler(
     res: NextApiResponse<any>
 ) {
     const { id } = req.query;
+
     const repository = await getRepository(Product);
     const product = await repository.findOneBy({
         id: parseInt(id as string)
     });
+
+    if (req.method == "DELETE"){
+        await repository.softDelete({
+            id: parseInt(id as string)
+        })
+    }
 
     res.status(200).json(product);
 }

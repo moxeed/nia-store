@@ -12,7 +12,7 @@ const AppDataSource = new DataSource({
     username: "postgres",
     password: "1qaz@WSX",
     database: "nia_store",
-    synchronize: process.env.DB_Address == "true",
+    synchronize: process.env.DB_Synchronize === "true",
     //logging: true,
     entities: [Product, Option, Label, Picture, Specification, FeaturedOption],
 })

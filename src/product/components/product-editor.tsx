@@ -5,6 +5,8 @@ import {Option} from "../entities/option";
 import {OptionsPicker} from "./options-picker";
 import {SpecificationEditor} from "./specification-editor";
 import {ImagePicker} from "./image-picker";
+import {NiaButton} from "../../common/components/nia-button";
+import {useRouter} from "next/router";
 
 const message = <Message showIcon type="success">
     با موفقیت ثبت شد
@@ -17,6 +19,7 @@ const failedMessage = <Message showIcon type="error">
 export const ProductEditor = (props: { product?: Product }) => {
     const [product, setProduct] = useState<Product>(props.product ?? new Product());
     const toast = useToaster()
+    const router = useRouter()
 
     const save = () => {
         fetch("/api/admin/product", {
@@ -24,10 +27,23 @@ export const ProductEditor = (props: { product?: Product }) => {
             body: JSON.stringify(product)
         })
             .then((res) => {
-                if (res.ok){
-                toast.push(message)
+                if (res.ok) {
+                    toast.push(message)
+                } else {
+                    toast.push(failedMessage)
                 }
-                else{
+            })
+    }
+
+    const remove = () => {
+        fetch("/api/admin/product/" + product.id, {
+            method: "DELETE"
+        })
+            .then((res) => {
+                if (res.ok) {
+                    toast.push(message)
+                    router.push("/admin/product").catch()
+                } else {
                     toast.push(failedMessage)
                 }
             })
@@ -40,6 +56,9 @@ export const ProductEditor = (props: { product?: Product }) => {
     return (
         <FlexboxGrid justify="center" className="bg-white m-2 rounded p-5 pb-5">
             <FlexboxGrid.Item colspan={24}>
+                {product.id && <NiaButton className="border-red-400 border text-red-400" onClick={remove}>
+                    حذف
+                </NiaButton>}
                 <ImagePicker pictures={product.pictures} setPictures={setPictures}/>
                 <Panel header="اطلاعات اصلی" className="mt-2" bordered>
                     <Form.ControlLabel className="text-lg">قیمت</Form.ControlLabel>

@@ -1,6 +1,6 @@
 import {
     Column,
-    CreateDateColumn,
+    CreateDateColumn, DeleteDateColumn,
     Entity,
     JoinTable,
     ManyToMany,
@@ -62,6 +62,9 @@ export class Product {
 
     @UpdateDateColumn()
     updateDateTime!: Date
+
+    @DeleteDateColumn()
+    deleteDateTime!: Date
 }
 
 @Entity()
