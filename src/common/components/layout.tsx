@@ -252,7 +252,7 @@ function Layout({children, areaScope}: { children: any, areaScope: "/admin/" | "
                     <Nav.Item className="text-gray-900 p-1" eventKey={states.home}>
                         <Link href={areaScope}>
                             <div className="h-full w-full">
-                                <img className="inline w-1/2" src="/logo1.jpg" alt="نیاکالا"/>
+                                <img className="inline w-16" src="/logo1.jpg" alt="نیاکالا"/>
                             </div>
                         </Link>
                     </Nav.Item>

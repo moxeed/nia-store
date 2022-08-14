@@ -29,10 +29,13 @@ export const ProductEditor = (props: { product?: Product }) => {
             .then((res) => {
                 if (res.ok) {
                     toast.push(message)
+                    return res.json()
                 } else {
                     toast.push(failedMessage)
+                    throw "error in product put"
                 }
-            })
+            }).then((product) => setProduct({...product, id: undefined}))
+            .catch()
     }
 
     const remove = () => {
@@ -52,6 +55,12 @@ export const ProductEditor = (props: { product?: Product }) => {
     const setTags = (tags: Array<Option>) => setProduct({...product, options: tags});
     const setSpecifications = (specifications: Array<Specification>) => setProduct({...product, specifications});
     const setPictures = (pictures: Array<Picture>) => setProduct({...product, pictures});
+    const setPrice = (value: string) => {
+        const price = value === "" ? 0 : parseInt(value)
+        
+        if (!isNaN(price))
+            setProduct({...product, price})
+    }
 
     return (
         <FlexboxGrid justify="center" className="bg-white m-2 rounded p-5 pb-5">
@@ -63,13 +72,13 @@ export const ProductEditor = (props: { product?: Product }) => {
                 <Panel header="اطلاعات اصلی" className="mt-2" bordered>
                     <Form.ControlLabel className="text-lg">قیمت</Form.ControlLabel>
                     <Input className="my-2" value={product.price}
-                           onChange={((val) => setProduct({...product, price: parseInt(val)}))}/>
+                           onChange={setPrice}/>
                     <Form.ControlLabel className="text-lg">عنوان</Form.ControlLabel>
                     <Input className="my-2" value={product.name}
-                           onChange={((val) => setProduct({...product, name: val}))}/>
+                           onChange={((val: string) => setProduct({...product, name: val}))}/>
                     <Form.ControlLabel className="text-lg">توضیحات</Form.ControlLabel>
                     <Input className="my-2" value={product.description}
-                           onChange={((val) => setProduct({...product, description: val}))}/>
+                           onChange={((val: string) => setProduct({...product, description: val}))}/>
                 </Panel>
                 <OptionsPicker tags={product.options} setTags={setTags}/>
                 <SpecificationEditor specifications={product.specifications} setSpecifications={setSpecifications}/>

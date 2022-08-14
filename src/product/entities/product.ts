@@ -98,11 +98,11 @@ export class Specification {
 }
 
 const createIndex = (options: Array<Option>) => {
-    return options.map(o => `${o.label.id}:${o.id}`).sort()
+    return options?.map(o => `${o.label.id}:${o.id}`).sort()
 }
 
 export const updateIndex = (product: Product) => {
-    product.optionsIndex = createIndex(product.options).join("-")
+    product.optionsIndex = createIndex(product.options)?.join("-")
 }
 
 export const normalizeIndex = (index?: string) => {
@@ -117,7 +117,6 @@ export const normalizeIndex = (index?: string) => {
     let result = "%" 
     for (const key of keys){
         const [label, value] = key.split(':')
-        console.log(label, value)
 
         if (label !== last){
             last = label
@@ -126,8 +125,6 @@ export const normalizeIndex = (index?: string) => {
         }
         
         result += value + '|'
-        console.log(result)
-        console.log(last)
     }
     
     return result + "0)%"

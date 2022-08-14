@@ -16,7 +16,7 @@ const handlePut = async (
     updateIndex(savedProduct)
     await repository.save(savedProduct);
 
-    res.status(200).json({name: 'John Doe'});
+    res.status(200).json(savedProduct);
 }
 
 export default async function handler(
@@ -29,12 +29,10 @@ export default async function handler(
     const {filters, search} = req.query
     const normalFilters = normalizeIndex(filters as string)
     const repository = await getRepository(Product)
-    
-    console.log(search)
 
     const where: FindOptionsWhere<Product> = {
         name: search ? Like(`%${search}%`) : undefined,
-        optionsIndex: filters ? Raw(a => `${a} SIMILAR TO '${normalFilters}'`) : undefined
+        optionsIndex: filters ? Raw((a: any) => `${a} SIMILAR TO '${normalFilters}'`) : undefined
     }
 
     const products = await repository.find({
