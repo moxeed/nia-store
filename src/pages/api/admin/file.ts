@@ -32,7 +32,7 @@ export default async function handler(
                     const result = {newFilename, fileKey: newFilename, url: "/" + newFilename}
                     res.status(200).json(result)
                     resolve(result)
-                }).catch(console.log)
+                }).catch()
         })
     })
 }

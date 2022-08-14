@@ -8,9 +8,6 @@ const getOptionsWithFilters = async (filters?: string, search?: string, isMajor?
     const repository = await getRepository(Product)
     const normalFilters = normalizeIndex(filters)
 
-    console.log(normalFilters)
-    console.log(search)
-
     const where: FindOptionsWhere<Product> = {
         name: search ? Like(`%${search}%`) : undefined,
         optionsIndex: filters ? Raw(a => `${a} SIMILAR TO '${normalFilters}'`) : undefined
@@ -24,7 +21,6 @@ const getOptionsWithFilters = async (filters?: string, search?: string, isMajor?
     });
 
     const unique = (value: Option, index: number, self: Array<Option>) => {
-        console.log(value.label.isMajor)
         return (value.label.isMajor === isMajor || !isMajor) && self.findIndex(a => a.id === value.id) === index;
     }
 
