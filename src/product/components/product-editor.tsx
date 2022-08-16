@@ -34,7 +34,7 @@ export const ProductEditor = (props: { product?: Product }) => {
                     toast.push(failedMessage)
                     throw "error in product put"
                 }
-            }).then((product) => setProduct({...product, id: undefined}))
+            }).then((responseProduct) => setProduct({...product, options: responseProduct.options}))
             .catch()
     }
 
