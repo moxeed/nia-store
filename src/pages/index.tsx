@@ -46,6 +46,11 @@ const Home: NextPage<Props> = ({featuredOptions}: Props) => {
             <NiaWrapper>
                 <FeaturedSection featuredOptions={featuredOptions}/>
             </NiaWrapper>
+            <NiaWrapper className="text-center pb-2">
+                <img src="/shipping.webp" className="px-3"/>
+                <h3 className="text-lg">تک فروشی به قیمت درب کارخانه و عمده فروشی</h3>
+                <h3>ارسال رایگان</h3>
+            </NiaWrapper>
             <NiaWrapper>
                 <Carousel style={{height: "50vw"}} autoplay={true}>
                     <img src="/car1.jpg"/>
