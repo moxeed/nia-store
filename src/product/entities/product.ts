@@ -102,7 +102,7 @@ const createIndex = (options: Array<Option>) => {
 }
 
 export const updateIndex = (product: Product) => {
-    product.optionsIndex = createIndex(product.options)?.join("-")
+    product.optionsIndex = `-${createIndex(product.options)?.join("-")}-`
 }
 
 export const normalizeIndex = (index?: string) => {
@@ -114,18 +114,18 @@ export const normalizeIndex = (index?: string) => {
         .sort()
     
     let last = "";
-    let result = "%" 
+    let result = "%-" 
     for (const key of keys){
         const [label, value] = key.split(':')
 
         if (label !== last){
             last = label
-            result += result[result.length - 1] == '|' ? '0)%' : ""
+            result += result[result.length - 1] == '|' ? '0)-%' : ""
             result += label + ':('
         }
         
         result += value + '|'
     }
     
-    return result + "0)%"
+    return result + "0)-%"
 }
