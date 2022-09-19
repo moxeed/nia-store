@@ -24,7 +24,10 @@ export default async function handler(
             pictures: true,
             options: true,
         },
-        where
+        where,
+        order: {
+            name: "asc"
+        }
     })
 
     const productBriefs = products.map(p => ({...p, file: p.pictures[0]?.file}))

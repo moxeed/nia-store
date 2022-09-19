@@ -5,7 +5,7 @@ import {ImagePicker} from "../image-picker";
 import {Picture} from "../../entities/product";
 import {OptionsPicker} from "../options-picker";
 import {Option} from "../../entities/option";
-import {Button, Message, Panel, useToaster} from "rsuite";
+import {Button, Input, Message, Panel, useToaster} from "rsuite";
 
 const message = <Message showIcon type="success">
     با موفقیت ثبت شد
@@ -33,6 +33,10 @@ export const FeaturedEditor = ({id}: { id?: number }) => {
         }
     }
 
+    const handleOrderChange = (order: string) => {
+        setFeatureOption({...featureOption, order: parseInt(order)})
+    }
+
     const handleOptionUpdate = (options: Array<Option>) => {
         const option = options.pop()
         if (option) {
@@ -49,6 +53,7 @@ export const FeaturedEditor = ({id}: { id?: number }) => {
     
 
     return <Panel className="bg-white">
+        <Input value={featureOption.order} onChange={handleOrderChange}/>
         <ImagePicker pictures={pictures} setPictures={handlePictureUpdate}/>
         <OptionsPicker tags={tags} setTags={handleOptionUpdate}/>
         <Button onClick={handleSubmit}>ثبت</Button>

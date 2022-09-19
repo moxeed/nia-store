@@ -1,8 +1,5 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import {Option} from "../../../product/entities/option";
-import {IsNull, Like, Raw} from "typeorm";
 import {getRepository} from "../../../database/datasource";
-import {normalizeIndex, Product} from "../../../product/entities/product";
 import {FeaturedOption} from "../../../product/entities/featuredOption";
 
 export default async function handler(

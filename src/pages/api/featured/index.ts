@@ -7,7 +7,11 @@ export default async function handler(
     res: NextApiResponse<any>
 ) {
     const repository = await getRepository(FeaturedOption)
-    const featuredOptions = await repository.find()
+    const featuredOptions = await repository.find({
+        order: {
+            order: "asc"
+        }
+    })
 
     res.status(200).json(featuredOptions)
 }

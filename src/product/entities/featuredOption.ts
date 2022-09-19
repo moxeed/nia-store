@@ -5,7 +5,12 @@ import {Option} from "./option";
 export class FeaturedOption {
     @PrimaryGeneratedColumn()
     id!: number
-    
+
+    @Column({
+        default: 1
+    })
+    order!: number
+
     @Column()
     image!: string
     
