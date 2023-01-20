@@ -61,6 +61,12 @@ const Home: NextPage<Props> = ({featuredOptions}: Props) => {
                     <QuoteRight/> کیفیت هرگز از مد نمی افتد
                 </p>
             </NiaWrapper>
+            <NiaWrapper className="px-12 pb-2 text-center">
+                <img src="/delivery.webp" alt="نماینده برتر برندهای معتبر داخلی"/>
+                <p className="p-2">
+                    <QuoteRight/> ارسال رایگان
+                </p>
+            </NiaWrapper>
         </Layout>
     )
 }

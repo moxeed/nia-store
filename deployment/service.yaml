@@ -46,7 +46,7 @@ spec:
     spec:
       containers:
       - name: nia-store
-        image: ghcr.io/moxeed/nia-store:v0.0.27
+        image: ghcr.io/moxeed/nia-store:v0.0.29
         ports:
         - containerPort: 3000
         volumeMounts:
