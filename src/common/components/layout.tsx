@@ -229,7 +229,7 @@ function Layout({children, areaScope}: { children: any, areaScope: "/admin/" | "
             </Content>
             <Footer className="text-center bg-white rounded-xl overflow-hidden m-2">
                 {active === states.home && <div className="m-2">
-                    <Link href="tel:09124097690">
+                    <Link href="tel:09120913420">
                         <IconButton className="bg-blue-500 mx-5" icon={<Phone color="white"/>} circle size="md"/>
                     </Link>
                     <Link href="https://wa.me/0989120913420">
