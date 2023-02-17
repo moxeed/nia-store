@@ -232,7 +232,7 @@ function Layout({children, areaScope}: { children: any, areaScope: "/admin/" | "
                     <Link href="tel:09124097690">
                         <IconButton className="bg-blue-500 mx-5" icon={<Phone color="white"/>} circle size="md"/>
                     </Link>
-                    <Link href="https://wa.me/0989124097690">
+                    <Link href="https://wa.me/0989120913420">
                         <IconButton className="bg-green-500 mx-5" icon={<Whatsapp color="white"/>} circle
                                     size="md"/>
                     </Link>
